@@ -5,7 +5,7 @@ Kibbutz is a social media platform that allows people to crowdsource their decis
 ### Example User Story:
 Jack is unsure of what sandwich to get for lunch. He posts a survey with three options and a time limit of 2 minutes. After two minutes, Jack selects a turkey sandwich, which was the most upvoted answer. He then posts an image of him eating the said turkey sandwich and improves his karma score. 
 ### Risks
-Inherently, Kibbutz will motivate a certain group of people to perform dangerous or even illegal activity for internet karma. Kibbutz will need a comprehensive user policy that sets strict guidelines about what kind of decisions are acceptable to outsource.
+Inherently, Kibbutz will motivate a certain group of people to perform dangerous or even illegal activity for internet karma. Kibbutz will need a comprehensive user policy that sets strict guidelines about what kind of decisions are acceptable to crowdsource.
 ### Potential Methods of Monetization
 Like most sites, Kibbutz can make money through advertisement. Kibbutz could also run special “sponsor” days, where the extra karma is awarded to people who crowdsource decisions involving the sponsor’s products. Kibbutz can also sell the data of various decisions to various companies. For example, it may turn out that the community seems to value Skittles over Starburst in head-on decisions.
 
