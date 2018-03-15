@@ -11,7 +11,7 @@ Like most sites, Kibbutz can make money through advertisement. Kibbutz could als
 
 ## Project Design
 
-This project will use Spring MVC as the main framework that glues the project together. Hopefully, I will be able to use Bulma on the front-end in order to simplify the CSS for the project. For the backend, I will use JPA for object-relational mapping and Hibernate as the persistence provider. Depending on how things work out, I may use React on the front-end to simplify aspects of my UI. 
+This project will use Spring MVC as the main framework that glues the project together. Hopefully, I will be able to use Bulma on the front-end in order to simplify the CSS for the project. For the backend, I will use JPA for object-relational mapping and Hibernate and MySQL as the persistence provider. Depending on how things work out, I may use React on the front-end to simplify aspects of my UI. 
 
 ### Use Cases
 1.   User posts survey
