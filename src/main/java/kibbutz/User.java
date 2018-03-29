@@ -5,10 +5,15 @@
  */
 package kibbutz;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -30,6 +35,13 @@ public class User {
     private String email;
   //  private Boolean emailConfirmed;
     private long karmaScore;
+    
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JoinColumn(name = "id")
+    private List<Survey> surveys = new ArrayList();
     
     protected User() {}
     

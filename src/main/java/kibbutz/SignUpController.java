@@ -29,18 +29,33 @@ public class SignUpController {
     @GetMapping("/sign-up")
     public String signUp(Model model) {
         model.addAttribute("userForm", new UserForm());
+        model.addAttribute("message", "");
         return "sign-up";
     }
     
     @PostMapping("/sign-up")
-    public String createAccount(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult){
+    public String createAccount(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult, Model model){
         
-        if(!userForm.passwordIsValid() || bindingResult.hasErrors()){
+        boolean invalidPassword = !userForm.passwordIsValid();
+        boolean hasErrors = bindingResult.hasErrors();
+        boolean usernameNotUnique = userRepo.getUserByUsername(userForm.getUsername()) != null;
+        
+        if(invalidPassword || hasErrors || usernameNotUnique){
+            String errorMsg = "";
+            if(invalidPassword){
+                errorMsg = "Passwords do not match";
+            } else if (hasErrors){
+                errorMsg = "****Make sure all fields are complete and fulfill requirements";
+            } else {
+                errorMsg = "Username not unique";
+            }
+            model.addAttribute("message", errorMsg);
             return "sign-up";
         }
         
         userRepo.save(new User(userForm));
         return "account-created";
     }
+    
     
 }

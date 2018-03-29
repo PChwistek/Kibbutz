@@ -6,12 +6,24 @@
 </head>
 <body>
     <h1>Welcome to Kibbutz!</h1>
-    <p>
-        Login: 
-    </p>
-    <p> OR </p>
-    <p>
-        <a href="/sign-up"> Sign-up! </a>
-    </p>
+    <div th:if="${user.username == null}">
+        <p>
+           <form action="#" th:action="@{/login}" th:object="${loginForm}" method="post">     
+            <p>Username: <input type="text" th:field="*{username}"/>
+                Password: <input type="password" th:field="*{password}"/></p>
+                <input type='submit' value='Login' />
+            </form>
+        </p>
+        OR <a href="/sign-up"> Sign-up! </a>
+    </div>
+    <div th:unless="${user.username == null}">
+        <a href="/user"> <p> Your Account </p> </a>
+        <a href="/post-survey"> <h3> Post a Survey </h3> </a>
+        <form class="button" th:action="@{/logout}" method="POST">
+            <input type="submit" value="Logout"/>
+        </form>    
+    </div>
+    <span th:text="${status}"></span>
+    
 </body>
 </html>

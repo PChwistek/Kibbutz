@@ -1,6 +1,13 @@
-/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/UserRepository.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SignUpController.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/User.java
-/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/Survey.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/HomeController.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/Application.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SurveyRepository.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/PostController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/LoginForm.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/UserController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/UserRepository.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/Survey.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/Proof.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/UserForm.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SurveyForm.java

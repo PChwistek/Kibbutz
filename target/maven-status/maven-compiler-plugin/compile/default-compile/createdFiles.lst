@@ -1,6 +1,13 @@
+kibbutz/UserController.class
+kibbutz/LoginForm.class
+kibbutz/SurveyForm.class
 kibbutz/UserRepository.class
+kibbutz/PostController.class
+kibbutz/SignUpController.class
 kibbutz/Proof.class
 kibbutz/HomeController.class
-kibbutz/User.class
 kibbutz/Application.class
+kibbutz/UserForm.class
+kibbutz/SurveyRepository.class
+kibbutz/User.class
 kibbutz/Survey.class
