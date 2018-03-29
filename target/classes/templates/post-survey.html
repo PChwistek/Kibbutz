@@ -12,6 +12,9 @@
        <br></br>
         <label for="file">Choose file to upload</label>
         <input th:field="*{postPic}" type="file" id="file" name="file" accept="image/*"></input>
+        <p> Option 1: <input type="text" th:field="*{choiceOne}" /> </p>
+        <p> Option 2: <input type="text" th:field="*{choiceTwo}" /> </p>
+        <p> Time Limit: 1 hour (more options to come!)</p>
         <br></br>
         <input type='submit' value='Submit' />
    </form>

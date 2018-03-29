@@ -36,6 +36,7 @@ public class HomeController {
     @GetMapping("/")
     public String index(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("loginForm", new LoginForm());
+        model.addAttribute("choiceForm", new ChoiceForm());
         model.addAttribute("surveys", surveyRepo.findAll());
         return "index";
     }

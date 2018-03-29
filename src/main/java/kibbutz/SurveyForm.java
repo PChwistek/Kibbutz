@@ -5,15 +5,7 @@
  */
 package kibbutz;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -21,12 +13,13 @@ import javax.persistence.TemporalType;
  */
 public class SurveyForm {
     
-    
     private String text;
     private String title;
     private byte[] postPic;
-    private List<Option> options = new ArrayList();
-
+    private String choiceOne;
+    private String choiceTwo;
+    private Date terminationDate;
+    
     /**
      * @return the text
      */
@@ -68,7 +61,47 @@ public class SurveyForm {
     public void setTitle(String title) {
         this.title = title;
     }
-    
-    
+
+    /**
+     * @return the optionOne
+     */
+    public String getChoiceOne() {
+        return choiceOne;
+    }
+
+    /**
+     * @param optionOne the optionOne to set
+     */
+    public void setChoiceOne(String optionOne) {
+        this.choiceOne = optionOne;
+    }
+
+    /**
+     * @return the optionTwo
+     */
+    public String getChoiceTwo() {
+        return choiceTwo;
+    }
+
+    /**
+     * @param optionTwo the optionTwo to set
+     */
+    public void setChoiceTwo(String choiceTwo) {
+        this.choiceTwo = choiceTwo;
+    }
+
+    /**
+     * @return the terminationDate
+     */
+    public Date getTerminationDate() {
+        return terminationDate;
+    }
+
+    /**
+     * @param terminationDate the terminationDate to set
+     */
+    public void setTerminationDate(Date terminationDate) {
+        this.terminationDate = terminationDate;
+    }
     
 }

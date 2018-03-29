@@ -28,7 +28,7 @@ public class Survey {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Long surveyId;
     @Temporal(value=TemporalType.TIMESTAMP)
     @Column(name="CREATED_TIME")
     private Date creationTime;
@@ -39,39 +39,42 @@ public class Survey {
     private String title;
     private int upVotes;
     private int downVotes;
+    private String author;
     
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JoinColumn(name = "id")
-    private List<Option> options = new ArrayList();
+    @JoinColumn(name = "surveyId")
+    private List<Choice> choices = new ArrayList();
 
     
     @Column(name="POST_PIC")
     private byte[] postPic;
-    //image
+    
     
     protected Survey(){};
     
     protected Survey(SurveyForm surveyForm){
         this.title = surveyForm.getTitle();
         this.text = surveyForm.getText();
-        this.postPic = surveyForm.getPostPic();
+        this.choices.add(new Choice(surveyForm.getChoiceOne()));
+        this.choices.add(new Choice(surveyForm.getChoiceTwo()));
+        //this.postPic = surveyForm.getPostPic();
     }
 
     /**
      * @return the id
      */
-    public Long getId() {
-        return id;
+    public Long getSurveyId() {
+        return surveyId;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
-        this.id = id;
+    public void setSurveyId(Long id) {
+        this.surveyId = id;
     }
 
   
@@ -176,15 +179,29 @@ public class Survey {
     /**
      * @return the options
      */
-    public List<Option> getOptions() {
-        return options;
+    public List<Choice> getChoices() {
+        return choices;
     }
 
     /**
      * @param options the options to set
      */
-    public void setOptions(List<Option> options) {
-        this.options = options;
+    public void setOptions(List<Choice> choices) {
+        this.choices = choices;
+    }
+
+    /**
+     * @return the username
+     */
+    public String getAuthor() {
+        return author;
+    }
+
+    /**
+     * @param username the username to set
+     */
+    public void setAuthor(String author) {
+        this.author = author;
     }
     
 }

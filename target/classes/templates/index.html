@@ -6,6 +6,7 @@
 </head>
 <body>
     <h1>Welcome to Kibbutz!</h1>
+    <span th:text="${status}"></span>
     <div th:if="${user.username == null}">
         <p>
            <form action="#" th:action="@{/login}" th:object="${loginForm}" method="post">     
@@ -23,12 +24,25 @@
             <input type="submit" value="Logout"/>
         </form>    
     </div>
-    <span th:text="${status}"></span>
     <hr></hr>
     <div>
         <h1>Results</h1>
         <ul>
-           <li th:each="survey : ${surveys}" th:text="${survey.title}">Item description here...</li>
+            <li th:each="survey : ${surveys}">
+                <div>
+                    <p th:text="${survey.title}" />
+                    <p th:text="${survey.author}" />
+                    <p th:text="${survey.text}" />                        
+                    <form action="#" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
+                        <li th:each="choice: ${survey.choices}">
+                            <input type="radio" name="${choiceForm.choiceOne}" value= "${choice.name}" th:text="${choice.name}" />
+                        </li>
+                        <input th:if="${user.username != null}" type="submit" value="Vote"/>
+                        <p th:if="${user.username == null}"> Must be logged in to vote! </p>
+                    </form> 
+                </div>
+                <br></br>
+            </li>
         </ul>
     </div>
     

@@ -27,14 +27,15 @@ This project will use Spring MVC as the main framework that glues the project to
 3.   User login
 4.	Allow users to post to the site (basic survey and time limit)
 5.	Allow users to vote on others’ posts
-6.      Allow users to suggest answers
 
 ### Milestone 2
 1.   Allow users to comment on other's posts
 2.   Allow users to follow/friend other users
-3.	Allow OP to post photographic proof 
-4.	Allow users to determine their satisfaction with proof
+3.   Allow OP to post photographic proof 
+4. Allow users to determine their satisfaction with proof
 5.	Create more survey templates 
+6.      Allow users to suggest answers
+
 
 ### Milestone 3
 1.	Stylize site using CSS and JavaScript
