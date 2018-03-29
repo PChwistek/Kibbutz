@@ -40,7 +40,7 @@ public class User {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "username")
     private List<Survey> surveys = new ArrayList();
     
     protected User() {}
@@ -149,6 +149,20 @@ public class User {
      */
     public void setKarmaScore(long karmaScore) {
         this.karmaScore = karmaScore;
+    }
+
+    /**
+     * @return the surveys
+     */
+    public List<Survey> getSurveys() {
+        return surveys;
+    }
+
+    /**
+     * @param surveys the surveys to set
+     */
+    public void setSurveys(List<Survey> surveys) {
+        this.surveys = surveys;
     }
     
 }

@@ -18,12 +18,19 @@
     </div>
     <div th:unless="${user.username == null}">
         <a href="/user"> <p> Your Account </p> </a>
-        <a href="/post-survey"> <h3> Post a Survey </h3> </a>
+        <a href="/survey"> <h3> Post a Survey </h3> </a>
         <form class="button" th:action="@{/logout}" method="POST">
             <input type="submit" value="Logout"/>
         </form>    
     </div>
     <span th:text="${status}"></span>
+    <hr></hr>
+    <div>
+        <h1>Results</h1>
+        <ul>
+           <li th:each="survey : ${surveys}" th:text="${survey.title}">Item description here...</li>
+        </ul>
+    </div>
     
 </body>
 </html>

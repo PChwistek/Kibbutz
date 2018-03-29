@@ -27,6 +27,7 @@ This project will use Spring MVC as the main framework that glues the project to
 3.   User login
 4.	Allow users to post to the site (basic survey and time limit)
 5.	Allow users to vote on others’ posts
+6.      Allow users to suggest answers
 
 ### Milestone 2
 1.   Allow users to comment on other's posts

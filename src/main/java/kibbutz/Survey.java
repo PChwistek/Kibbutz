@@ -5,12 +5,17 @@
  */
 package kibbutz;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -24,20 +29,36 @@ public class Survey {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    
     @Temporal(value=TemporalType.TIMESTAMP)
     @Column(name="CREATED_TIME")
     private Date creationTime;
     @Temporal(value=TemporalType.TIMESTAMP)
-    @Column(name="UPDATED_TIME")
+    @Column(name="TO_TERMINATE_TIME")
     private Date terminationTime;
     private String text;
+    private String title;
+    private int upVotes;
+    private int downVotes;
+    
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JoinColumn(name = "id")
+    private List<Option> options = new ArrayList();
+
     
     @Column(name="POST_PIC")
     private byte[] postPic;
     //image
     
     protected Survey(){};
+    
+    protected Survey(SurveyForm surveyForm){
+        this.title = surveyForm.getTitle();
+        this.text = surveyForm.getText();
+        this.postPic = surveyForm.getPostPic();
+    }
 
     /**
      * @return the id
@@ -108,6 +129,62 @@ public class Survey {
      */
     public void setPostPic(byte[] postPic) {
         this.postPic = postPic;
+    }
+
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return the upVotes
+     */
+    public int getUpVotes() {
+        return upVotes;
+    }
+
+    /**
+     * @param upVotes the upVotes to set
+     */
+    public void setUpVotes(int upVotes) {
+        this.upVotes = upVotes;
+    }
+
+    /**
+     * @return the downVotes
+     */
+    public int getDownVotes() {
+        return downVotes;
+    }
+
+    /**
+     * @param downVotes the downVotes to set
+     */
+    public void setDownVotes(int downVotes) {
+        this.downVotes = downVotes;
+    }
+
+    /**
+     * @return the options
+     */
+    public List<Option> getOptions() {
+        return options;
+    }
+
+    /**
+     * @param options the options to set
+     */
+    public void setOptions(List<Option> options) {
+        this.options = options;
     }
     
 }

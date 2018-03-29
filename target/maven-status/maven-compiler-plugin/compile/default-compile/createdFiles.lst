@@ -10,4 +10,5 @@ kibbutz/Application.class
 kibbutz/UserForm.class
 kibbutz/SurveyRepository.class
 kibbutz/User.class
+kibbutz/Option.class
 kibbutz/Survey.class

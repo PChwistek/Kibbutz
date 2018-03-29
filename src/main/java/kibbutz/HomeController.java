@@ -36,13 +36,14 @@ public class HomeController {
     @GetMapping("/")
     public String index(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("loginForm", new LoginForm());
+        model.addAttribute("surveys", surveyRepo.findAll());
         return "index";
     }
     
     
     @PostMapping("/login")
-    public RedirectView login(@Valid @ModelAttribute LoginForm loginForm, @ModelAttribute("user") User user, SessionStatus status,
-            BindingResult bindingResult, Model model) {
+    public RedirectView login(@Valid @ModelAttribute LoginForm loginForm, @ModelAttribute("user") User user, 
+            SessionStatus status, BindingResult bindingResult, Model model) {
         
         if(bindingResult.hasErrors()){
             model.addAttribute("loginForm", new LoginForm());
@@ -55,7 +56,7 @@ public class HomeController {
         boolean validLogin = someUser != null && someUser.getPassword().equals(loginForm.getPassword());
         
         if(validLogin){
-            user = someUser;
+            user.setId(someUser.getId());
             model.addAttribute("status", "logged-in" + user.getUsername());
             return new RedirectView("/");
         } 
@@ -67,7 +68,7 @@ public class HomeController {
     }
     
     @PostMapping("/logout")
-    public RedirectView logout(@ModelAttribute("user") User user, SessionStatus status, RedirectAttributes attributes){
+    public RedirectView logout(@ModelAttribute("user") User user, SessionStatus status, RedirectAttributes attributes) {
         user = null;
         status.setComplete();
         return new RedirectView("/");
