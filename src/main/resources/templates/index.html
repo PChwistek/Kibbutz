@@ -27,6 +27,7 @@
     <hr></hr>
     <div>
         <h1>Results</h1>
+        <p th:if="${user.username == null}"> Must be logged in to vote! </p>
         <ul>
             <li th:each="survey : ${surveys}">
                 <div>
@@ -38,7 +39,6 @@
                             <input type="radio" name="${choiceForm.choiceOne}" value= "${choice.name}" th:text="${choice.name}" />
                         </li>
                         <input th:if="${user.username != null}" type="submit" value="Vote"/>
-                        <p th:if="${user.username == null}"> Must be logged in to vote! </p>
                     </form> 
                 </div>
                 <br></br>

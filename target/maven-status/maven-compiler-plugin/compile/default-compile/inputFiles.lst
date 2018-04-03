@@ -1,5 +1,8 @@
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SignUpController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/Choice.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/User.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/ChoiceForm.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/ChoiceRepository.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/HomeController.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/Application.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SurveyRepository.java
@@ -11,4 +14,4 @@
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/Proof.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/UserForm.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SurveyForm.java
-/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/Option.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/VoteController.java

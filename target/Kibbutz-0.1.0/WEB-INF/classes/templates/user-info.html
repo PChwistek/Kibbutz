@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Kibbutz - User Profile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<h1> Your Account </h1>
+<div th:object="${user}">
+    <span th:text="'Username: ' + *{username}"></span>
+    <a href="/"> <p> Back to home </p> </a>
+</div>
+</html>
+
