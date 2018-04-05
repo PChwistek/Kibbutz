@@ -5,8 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <h1>Create an account. It's simple!</h1>
+    <a href="/"> Back to home page </a>
     <p th:text= " ${message} " />
-    <form action="#" th:action="@{/sign-up}" th:object="${userForm}" method="post">     
+    <form action="#" th:action="@{/sign-up}" th:object="${signUpForm}" method="post">     
         <p>First name: <input type="text" th:field="*{first}" /></p>
         <p>Last name: <input type="text" th:field="*{last}" /></p>
         <p>Email: <input type="text" th:field="*{email}" /></p>

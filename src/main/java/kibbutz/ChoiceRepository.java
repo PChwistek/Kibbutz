@@ -5,6 +5,7 @@
  */
 package kibbutz;
 
+import kibbutz.model.entity.Choice;
 import org.springframework.data.repository.CrudRepository;
 
 /**

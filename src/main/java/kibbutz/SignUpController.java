@@ -5,6 +5,8 @@
  */
 package kibbutz;
 
+import kibbutz.model.form.SignUpForm;
+import kibbutz.model.entity.User;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +28,22 @@ public class SignUpController {
     @Autowired
     private UserRepository userRepo;
     
+    @Autowired
+    private PasswordHasher hasher;
+    
     @GetMapping("/sign-up")
     public String signUp(Model model) {
-        model.addAttribute("userForm", new UserForm());
+        model.addAttribute("signUpForm", new SignUpForm());
         model.addAttribute("message", "");
         return "sign-up";
     }
     
     @PostMapping("/sign-up")
-    public String createAccount(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult, Model model){
+    public String createAccount(@Valid @ModelAttribute SignUpForm signUpForm, BindingResult bindingResult, Model model){
         
-        boolean invalidPassword = !userForm.passwordIsValid();
+        boolean invalidPassword = !signUpForm.passwordIsValid();
         boolean hasErrors = bindingResult.hasErrors();
-        boolean usernameNotUnique = userRepo.getUserByUsername(userForm.getUsername()) != null;
+        boolean usernameNotUnique = userRepo.getUserByUsername(signUpForm.getUsername()) != null;
         
         if(invalidPassword || hasErrors || usernameNotUnique){
             String errorMsg = "";
@@ -53,7 +58,10 @@ public class SignUpController {
             return "sign-up";
         }
         
-        userRepo.save(new User(userForm));
+        String hashedPass = hasher.hashPassword(signUpForm.getPassword());
+        signUpForm.setPassword(hashedPass);
+        
+        userRepo.save(new User(signUpForm));
         return "account-created";
     }
     

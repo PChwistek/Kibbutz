@@ -5,6 +5,9 @@
  */
 package kibbutz;
 
+import kibbutz.model.form.SurveyForm;
+import kibbutz.model.entity.Survey;
+import kibbutz.model.entity.User;
 import java.util.Calendar;
 import java.util.Date;
 import javax.validation.Valid;

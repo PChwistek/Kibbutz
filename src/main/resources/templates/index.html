@@ -20,7 +20,7 @@
     <div th:unless="${user.username == null}">
         <a href="/user"> <p> Your Account </p> </a>
         <a href="/survey"> <h3> Post a Survey </h3> </a>
-        <form class="button" th:action="@{/logout}" method="POST">
+        <form class="button" th:action="@{/logout}" method="get">
             <input type="submit" value="Logout"/>
         </form>    
     </div>

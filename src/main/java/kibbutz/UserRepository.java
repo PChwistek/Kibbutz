@@ -5,6 +5,7 @@
  */
 package kibbutz;
 
+import kibbutz.model.entity.User;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
