@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import kibbutz.model.form.SurveyForm;
@@ -49,11 +50,13 @@ public class Survey {
     )
     @JoinColumn(name = "surveyId")
     private List<Choice> choices = new ArrayList();
-
     
-    @Column(name="POST_PIC")
-    private byte[] postPic;
-    
+    @OneToOne(
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    @JoinColumn(name = "surveyId")
+    private SurveyPicture picture;
     
     public Survey(){};
     
@@ -120,20 +123,6 @@ public class Survey {
      */
     public void setTerminationTime(Date terminationTime) {
         this.terminationTime = terminationTime;
-    }
-
-    /**
-     * @return the postPic
-     */
-    public byte[] getPostPic() {
-        return postPic;
-    }
-
-    /**
-     * @param postPic the postPic to set
-     */
-    public void setPostPic(byte[] postPic) {
-        this.postPic = postPic;
     }
 
     /**
@@ -205,5 +194,20 @@ public class Survey {
     public void setAuthor(String author) {
         this.author = author;
     }
+
+    /**
+     * @return the thePicture
+     */
+    public SurveyPicture getPicture() {
+        return picture;
+    }
+
+    /**
+     * @param thePicture the thePicture to set
+     */
+    public void setPicture(SurveyPicture thePicture) {
+        this.picture = thePicture;
+    }
+  
     
 }

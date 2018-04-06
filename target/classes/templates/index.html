@@ -33,7 +33,8 @@
                 <div>
                     <p th:text="${survey.title}" />
                     <p th:text="${survey.author}" />
-                    <p th:text="${survey.text}" />                        
+                    <p th:text="${survey.text}" />     
+                     <img th:src="${survey.picture.id}" />
                     <form action="#" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
                         <li th:each="choice: ${survey.choices}">
                             <input type="radio" name="${choiceForm.choiceOne}" value= "${choice.name}" th:text="${choice.name}" />
