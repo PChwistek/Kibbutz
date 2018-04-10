@@ -39,6 +39,7 @@
                     <form action="#" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
                         <li th:each="choice: ${survey.choices}">
                             <input type="radio" name="${choiceForm.choiceOne}" value= "${choice.name}" th:text="${choice.name}" />
+                            <p th:text="'Votes:  ' + ${choice.votes}" />
                         </li>
                         <input th:if="${user.username != null}" type="submit" value="Vote"/>
                     </form> 
