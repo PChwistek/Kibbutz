@@ -8,6 +8,22 @@
 <div th:object="${user}">
     <span th:text="'Username: ' + *{username}"></span>
     <a href="/"> <p> Back to home </p> </a>
+    
+    <h1> Your Posts </h1>
+    <ul>
+        <li th:each="survey : ${posted}">
+            <div>
+                <a th:href="@{'posted_survey?id=' + ${survey.surveyId}}"> 
+                    <p th:text="${survey.title}" />
+                </a>
+                <p th:text="'Ongoing: ' + ${survey.active}"/>
+            </div>
+        </li>
+    </ul>
+    
+    <h1> Your Voting History </h1> 
+    <p> List some stuff here </p> 
+    
 </div>
 </html>
 

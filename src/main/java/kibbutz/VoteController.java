@@ -32,15 +32,20 @@ public class VoteController {
     public String vote(@RequestParam("id") long id, @ModelAttribute ChoiceForm choice, Model model ){
         
         Survey theSurvey = surveyRepo.findOne(id);
-        
+                
         if(choice.equals(theSurvey.getChoices().get(0))){
             theSurvey.getChoices().get(0).incrementVote();
         } else {
             theSurvey.getChoices().get(1).incrementVote();
         }
         
+        System.out.println(theSurvey.getCreationTime().toString());
+        
+        System.out.println(theSurvey.getChoices().get(0).getVotes());
+        System.out.println(theSurvey.getChoices().get(1).getVotes());
+
+        
         surveyRepo.save(theSurvey);
-        model.addAttribute("selected", choice.getChoiceOne());
         return "voted";
     }
     

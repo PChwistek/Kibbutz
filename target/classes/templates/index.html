@@ -33,6 +33,7 @@
                 <div>
                     <p th:text="${survey.title}" />
                     <p th:text="${survey.author}" />
+                    <p th:text="'Ongoing: ' + ${survey.active}"/>
                     <p th:text="${survey.text}" />     
                      <img th:src="${survey.picture.id}" />
                     <form action="#" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">

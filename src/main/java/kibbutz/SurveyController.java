@@ -51,13 +51,15 @@ public class SurveyController {
         theSurvey.setAuthor(user.getUsername());
         System.out.println(file.getContentType());
         
-        theSurvey.setCreationTime(new Date());
         Calendar cal = Calendar.getInstance(); // creates calendar
-        cal.setTime(new Date()); // sets calendar time/date
-        cal.add(Calendar.HOUR_OF_DAY, 1); // adds one hour
+        theSurvey.setCreationTime(new Date());
+        cal.add(Calendar.MINUTE, 5); // 5 minutes
         theSurvey.setTerminationTime(cal.getTime()); // returns new date object, one hour in the future
-        
+        theSurvey.setActive(true);
         SurveyPicture thePicture = new SurveyPicture(file);
+        
+        System.out.println(theSurvey.getCreationTime().getTime());
+        System.out.println(theSurvey.getTerminationTime().getTime());
         
         try{
             

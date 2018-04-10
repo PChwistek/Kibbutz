@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Kibbutz - Survey Detail</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div>
+    <a href="/"> Back to home </a>
+    <p th:text="${survey.title}" />
+    <p th:text="${survey.author}" />
+    <p th:text="'Ongoing: ' + ${survey.active}"/>
+    <p th:text="${survey.text}" />     
+    <img th:src="${survey.picture.id}" />
+    <li th:each="choice : ${survey.choices}">
+        <p th:text="${choice.name} + '; Votes:  ' + ${choice.votes}" />
+    </li>
+</div>
+    
+</body>
+</html>

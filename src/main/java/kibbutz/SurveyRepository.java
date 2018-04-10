@@ -7,6 +7,7 @@ package kibbutz;
 
 import kibbutz.model.entity.Survey;
 import java.util.List;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -15,6 +16,8 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface SurveyRepository extends CrudRepository<Survey, Long> {
     
+        @Query("FROM Survey WHERE active = 1")
+        List<Survey> findAllActive();
 
     
 }

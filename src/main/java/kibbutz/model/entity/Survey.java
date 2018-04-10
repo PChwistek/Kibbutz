@@ -43,6 +43,7 @@ public class Survey {
     private int upVotes;
     private int downVotes;
     private String author;
+    private boolean active;
     
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -207,6 +208,20 @@ public class Survey {
      */
     public void setPicture(SurveyPicture thePicture) {
         this.picture = thePicture;
+    }
+
+    /**
+     * @return the active
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(boolean active) {
+        this.active = active;
     }
   
     

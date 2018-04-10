@@ -5,8 +5,10 @@
  */
 package kibbutz;
 
+import kibbutz.model.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,18 +17,24 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Application {
     
-     private static final Logger log = LoggerFactory.getLogger(Application.class);
+    // private static final Logger log = LoggerFactory.getLogger(Application.class);
+    
+    @Autowired
+    private PasswordHasher hasher;
 
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
     
-     @Bean
+    @Bean
     public CommandLineRunner demo(UserRepository repository) {
         return (args) -> {
-                // save a couple of customers
-                // repository.save(new AddressEntity("Phil", "617 Bellfower Blvd", "PA", "18976"));
+                // save login
+                User root = new User();
+                root.setUsername("pchwis");
+                root.setPassword(hasher.hashPassword("123"));
+                repository.save(root);
              
                 // fetch all customers
                 /*

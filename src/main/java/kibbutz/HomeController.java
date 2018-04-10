@@ -8,14 +8,18 @@ package kibbutz;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+import kibbutz.model.entity.Survey;
 import kibbutz.model.entity.SurveyPicture;
 import kibbutz.model.form.LoginForm;
 import kibbutz.model.form.ChoiceForm;
 import kibbutz.model.entity.User;
 import org.h2.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +50,7 @@ public class HomeController {
     public String index(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("loginForm", new LoginForm());
         model.addAttribute("choiceForm", new ChoiceForm());        
-        model.addAttribute("surveys", surveyRepo.findAll());
+        model.addAttribute("surveys", surveyRepo.findAllActive());
         return "index";
     }
     

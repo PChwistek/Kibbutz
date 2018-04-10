@@ -30,6 +30,7 @@ public class UserController {
     @GetMapping("/user")
     public String userInfo(@SessionAttribute("user") User user, Model model) {
        model.addAttribute("user", user);
+       model.addAttribute("posted", surveyRepo.findAll());
        return "user-info";
     }
     
