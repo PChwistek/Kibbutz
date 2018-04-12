@@ -33,7 +33,6 @@ This project will use Spring MVC as the main framework that glues the project to
 2.   Allow users to follow/friend other users
 3.   Allow OP to post photographic proof 
 4. Allow users to determine their satisfaction with proof
-6. Allow users to suggest answers
 7. Create/improve current form validations
 
 
@@ -42,7 +41,8 @@ This project will use Spring MVC as the main framework that glues the project to
       *	Main page, user page, posts, feed, etc.
 2.	Optimize karma algorithm
 3.	Fix any remaining bugs
-4. Create more survey templates
+4. Allow users to suggest answers
+5. Create more survey templates
 
 Ideally, the final project will have a simple and user-friendly interface that allows people to post decisions while also being able to vote on other people's decisions. After decisions are made, photographic proof is required to receive a healhy dose of internet karma. 
 
