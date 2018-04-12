@@ -14,6 +14,7 @@ import kibbutz.model.entity.Survey;
 import kibbutz.model.entity.SurveyPicture;
 import kibbutz.model.entity.User;
 import kibbutz.model.form.ProofForm;
+import kibbutz.model.form.SatisfiedForm;
 import org.h2.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,13 +45,26 @@ public class SurveyDisplayController {
     @Autowired
     private SurveyRepository surveyRepo;
     
+    @Autowired
+    private UserRepository userRepo;
+    
+    
     @GetMapping("/posted_survey")
-    public String vote(@RequestParam("id") String id, Model model, @SessionAttribute("user") User user,
-            @ModelAttribute("proofForm") ProofForm proofForm){
+    public String vote(@RequestParam("id") Long id, Model model, @SessionAttribute("user") User user){
         
-        Survey theSurvey = surveyRepo.findOne(Long.decode(id));
-        model.addAttribute("proofForm", proofForm);
+        Survey theSurvey = surveyRepo.findOne(id);
+        User theUser = userRepo.findUserByUsername(user.getUsername());
+        
+        model.addAttribute("proofForm", new ProofForm());
+        model.addAttribute("satisfiedForm", new SatisfiedForm());
         model.addAttribute("survey", theSurvey);
+        if(theSurvey.getProof() != null){
+            model.addAttribute("numSatisfied", theSurvey.getProof().getNumSatisfied());
+            model.addAttribute("numDisatisfied", theSurvey.getProof().getNumDisatisfied());
+            Survey temp = theUser.getSurveysReviewed().stream().filter(aSurvey -> aSurvey.getSurveyId().equals(id))
+            .findFirst().orElse(null);
+            model.addAttribute("voted", temp != null);
+        }
         return "survey-detail";
     }
     

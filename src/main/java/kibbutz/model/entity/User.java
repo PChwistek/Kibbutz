@@ -64,6 +64,16 @@ public class User {
     @JoinColumn(name="username")
     private Set<User> followers;
     
+    @OneToMany
+    @JoinTable(name="history")
+    @JoinColumn(name="userId")
+    private Set<Survey> votingHistory;
+    
+    @OneToMany
+    @JoinTable(name="reviewed")
+    @JoinColumn(name="userId")
+    private Set<Survey> surveysReviewed;
+    
     public User() {}
     
     public User(SignUpForm signUpForm){
@@ -214,7 +224,32 @@ public class User {
         this.followers = followers;
     }
 
- 
-    
+    /**
+     * @return the votingHistory
+     */
+    public Set<Survey> getVotingHistory() {
+        return votingHistory;
+    }
+
+    /**
+     * @param votingHistory the votingHistory to set
+     */
+    public void setVotingHistory(Set<Survey> votingHistory) {
+        this.votingHistory = votingHistory;
+    }
+
+    /**
+     * @return the surveysReviewed
+     */
+    public Set<Survey> getSurveysReviewed() {
+        return surveysReviewed;
+    }
+
+    /**
+     * @param surveysReviewed the surveysReviewed to set
+     */
+    public void setSurveysReviewed(Set<Survey> surveysReviewed) {
+        this.surveysReviewed = surveysReviewed;
+    }
 
 }

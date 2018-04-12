@@ -24,7 +24,17 @@
 <div>
     
     <h1> Your Voting History </h1> 
-    <p> List some stuff here </p> 
+    <h1> Voted </h1>
+    <ul>
+        <li th:each="survey : ${history}">
+            <div>
+                <a th:href="@{'posted_survey?id=' + ${survey.surveyId}}"> 
+                    <p th:text="${survey.title}" />
+                </a>
+                <p th:text="'Ongoing: ' + ${survey.active}"/>
+            </div>
+        </li>
+    </ul>
     
     <h2> Followers </h2>
     <li th:each="follower : ${followers}">

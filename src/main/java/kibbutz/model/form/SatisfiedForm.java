@@ -11,4 +11,22 @@ package kibbutz.model.form;
  */
 public class SatisfiedForm {
     
+    
+    private String satisfaction;
+
+    /**
+     * @return the satisfaction
+     */
+    public String getSatisfaction() {
+        return satisfaction;
+    }
+
+    /**
+     * @param satisfaction the satisfaction to set
+     */
+    public void setSatisfaction(String satisfaction) {
+        this.satisfaction = satisfaction;
+    }
+    
+    
 }

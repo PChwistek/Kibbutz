@@ -24,8 +24,8 @@ public class Proof {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long proofId;    
     private double karma;
-    private int satisfied;
-    private int dissatisfied;
+    private int numSatisfied = 0;
+    private int numDisatisfied = 0;
     private String comment;
     
     @OneToOne(
@@ -39,6 +39,14 @@ public class Proof {
     
     public Proof(ProofPicture picture){
         this.picture = picture;
+    }
+    
+    public void incrementNumSatisfied(){
+        this.setNumSatisfied(this.getNumSatisfied() + 1);
+    }
+    
+    public void incrementNumDisatisfied(){
+        this.setNumDisatisfied(this.getNumDisatisfied() - 1);
     }
 
     /**
@@ -83,35 +91,7 @@ public class Proof {
         this.picture = picture;
     }
 
-    /**
-     * @return the satisfied
-     */
-    public int getSatisfied() {
-        return satisfied;
-    }
-
-    /**
-     * @param satisfied the satisfied to set
-     */
-    public void setSatisfied(int satisfied) {
-        this.satisfied = satisfied;
-    }
-
-    /**
-     * @return the dissatisfied
-     */
-    public int getDissatisfied() {
-        return dissatisfied;
-    }
-
-    /**
-     * @param dissatisfied the dissatisfied to set
-     */
-    public void setDissatisfied(int dissatisfied) {
-        this.dissatisfied = dissatisfied;
-    }
-
-    /**
+     /*
      * @return the comment
      */
     public String getComment() {
@@ -123,5 +103,33 @@ public class Proof {
      */
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    /**
+     * @return the numSatisfied
+     */
+    public int getNumSatisfied() {
+        return numSatisfied;
+    }
+
+    /**
+     * @param numSatisfied the numSatisfied to set
+     */
+    public void setNumSatisfied(int numSatisfied) {
+        this.numSatisfied = numSatisfied;
+    }
+
+    /**
+     * @return the numDisatisfied
+     */
+    public int getNumDisatisfied() {
+        return numDisatisfied;
+    }
+
+    /**
+     * @param numDisatisfied the numDisatisfied to set
+     */
+    public void setNumDisatisfied(int numDisatisfied) {
+        this.numDisatisfied = numDisatisfied;
     }
 }

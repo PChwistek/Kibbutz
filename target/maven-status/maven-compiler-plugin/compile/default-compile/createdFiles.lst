@@ -1,9 +1,11 @@
 kibbutz/UserController.class
+kibbutz/ProofPictureRepository.class
 kibbutz/VoteController.class
 kibbutz/model/entity/Proof.class
 kibbutz/SignUpController.class
 kibbutz/PasswordHasher.class
 kibbutz/HomeController.class
+kibbutz/model/form/SatisfiedForm.class
 kibbutz/model/form/SignUpForm.class
 kibbutz/SurveyPictureRepository.class
 kibbutz/SurveyRepository.class
@@ -14,10 +16,12 @@ kibbutz/BeanConfig.class
 kibbutz/SurveyDisplayController.class
 kibbutz/ScheduledController.class
 kibbutz/model/form/ChoiceForm.class
+kibbutz/model/form/ProofForm.class
 kibbutz/model/form/LoginForm.class
 kibbutz/UserRepository.class
 kibbutz/model/entity/Survey.class
 kibbutz/model/form/SurveyForm.class
+kibbutz/ProofController.class
 kibbutz/Application.class
 kibbutz/FollowerController.class
 kibbutz/model/entity/Choice.class

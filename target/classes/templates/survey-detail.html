@@ -8,7 +8,7 @@
         <div>
             <a href="/"> Back to home </a>
             <h1 th:text="${survey.title}" />
-            <p th:text="${survey.author}" />
+            <a th:href="'/profile?author=' + ${survey.author}"><p th:text="${survey.author}" /></a>
             <p th:text="'Ongoing: ' + ${survey.active}"/>
             <p th:text="${survey.text}" />     
             <img th:if="${survey.picture != null}" th:src="${survey.picture.id}" />
@@ -27,12 +27,16 @@
                 </form>
             </div>
             <img th:if="${survey.proof != null}" th:src="${survey.proof.picture.id}" />
-            <div th:unless="${user.username == survey.author and survey.proof != null}">
-                <form action="#" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
-                    <input type="radio" name="" value= "" th:text="satisfied" />
-                    <input type="radio" name="" value= "" th:text="unsatisfied" />
+            <div th:unless="${user.username == survey.author or survey.proof == null or voted == true}">
+                <form action="#" th:action="@{'proof/post_vote/' + ${survey.surveyId}}" th:object="${satisfiedForm}" method="post">
+                    <input type="radio" th:name="${satisfiedForm.satisfaction}" th:field="${satisfiedForm.satisfaction}" value= "satisfied" th:text="satisfied" />
+                    <input type="radio" th:name="${satisfiedForm.satisfaction}"  th:field="${satisfiedForm.satisfaction}" value= "unsatisfied" th:text="unsatisfied" />
                     <input th:if="${user.username != null}" type="submit" value="Vote"/>
                 </form> 
+            </div>
+            <div th:if="${numSatisfied != null}">
+                <p th:text="'Satisfied: ' + ${numSatisfied}" />
+                <p th:text="'Disatisfied: ' + ${numDisatisfied}" />
             </div>
 
         </div>

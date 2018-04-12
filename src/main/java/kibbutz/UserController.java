@@ -49,6 +49,7 @@ public class UserController {
             followers.add(aUser.getUsername());
         });
         
+        model.addAttribute("history", theUser.getVotingHistory());
         model.addAttribute("posted", theUser.getSurveys());
         model.addAttribute("followers", followers);
         model.addAttribute("following", following);
@@ -69,7 +70,9 @@ public class UserController {
             return new ModelAndView("redirect:/user");
         }
         
-        model.addAttribute("posted", userRepo.findUserByUsername(author).getSurveys());
+        User temp = userRepo.findUserByUsername(author);
+        
+        model.addAttribute("posted", temp.getSurveys());
         model.addAttribute("isFollowing", isFollowing);
         model.addAttribute("user", user);
         model.addAttribute("author", userRepo.findUserByUsername(author));

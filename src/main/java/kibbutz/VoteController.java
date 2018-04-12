@@ -7,6 +7,7 @@ package kibbutz;
 
 import kibbutz.model.form.ChoiceForm;
 import kibbutz.model.entity.Survey;
+import kibbutz.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 /**
@@ -22,29 +25,35 @@ import org.springframework.web.servlet.view.RedirectView;
  */
 
 @Controller
+@SessionAttributes("user")
 public class VoteController {
     
-     @Autowired
+    @Autowired
     private SurveyRepository surveyRepo;
+     
+    @Autowired
+    private UserRepository userRepo;
+    
     
     
     @PostMapping("/vote")
-    public String vote(@RequestParam("id") long id, @ModelAttribute ChoiceForm choice, Model model ){
+    public String vote(@RequestParam("id") Long id, @ModelAttribute ChoiceForm choice, @SessionAttribute("user") User user, 
+            Model model ){
         
         Survey theSurvey = surveyRepo.findOne(id);
+        User theUser = userRepo.findUserByUsername(user.getUsername());
+        
+        System.out.println(choice.getChoiceOne());
                 
-        if(choice.equals(theSurvey.getChoices().get(0))){
+        if(choice.getChoiceOne().equals(theSurvey.getChoices().get(0).getName())){
             theSurvey.getChoices().get(0).incrementVote();
         } else {
             theSurvey.getChoices().get(1).incrementVote();
         }
         
-        System.out.println(theSurvey.getCreationTime().toString());
+        theUser.getVotingHistory().add(theSurvey);
         
-        System.out.println(theSurvey.getChoices().get(0).getVotes());
-        System.out.println(theSurvey.getChoices().get(1).getVotes());
-
-        
+        userRepo.save(theUser);
         surveyRepo.save(theSurvey);
         return "voted";
     }
