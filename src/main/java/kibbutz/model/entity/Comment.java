@@ -31,6 +31,7 @@ public class Comment {
     public Comment(Long authorId, String text, String username){
         this.authorId = authorId;
         this.text = text;
+        this.username = username;
     }
     /**
      * @return the commentId

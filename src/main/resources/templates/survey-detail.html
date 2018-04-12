@@ -44,8 +44,8 @@
                 <input type='submit' value='Submit' />
             </form>
             <li th:each="comment: ${survey.comments}">
-                <a th:href="'/profile?author=' + *{comment.username}">
-                    <p th:text="*{comment.username}"></p>
+                <a th:href="{'/profile?author=' + *{comment.username}}">
+                    <p th:text="*{comment.username}" />
                 </a>
                 <p th:text="*{comment.text}" />
                 <br></br>
