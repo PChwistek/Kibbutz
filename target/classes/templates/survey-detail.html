@@ -38,8 +38,18 @@
                 <p th:text="'Satisfied: ' + ${numSatisfied}" />
                 <p th:text="'Disatisfied: ' + ${numDisatisfied}" />
             </div>
-
+            <h2> Comments </h2>
+            <form action="#" th:action="@{'survey/post_comment/' + ${survey.surveyId}}" th:object="${commentForm}" method="post">    
+                <textarea th:field="*{text}" rows="10" cols="50"></textarea>
+                <input type='submit' value='Submit' />
+            </form>
+            <li th:each="comment: ${survey.comments}">
+                <a th:href="'/profile?author=' + *{comment.username}">
+                    <p th:text="*{comment.username}"></p>
+                </a>
+                <p th:text="*{comment.text}" />
+                <br></br>
+            </li>
         </div>
-
     </body>
 </html>

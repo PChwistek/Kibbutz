@@ -22,8 +22,10 @@
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SignUpController.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SurveyDisplayController.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/HomeController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/Comment.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/UserController.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/Choice.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/form/CommentForm.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SecurityConfig.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/form/LoginForm.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/SurveyPicture.java

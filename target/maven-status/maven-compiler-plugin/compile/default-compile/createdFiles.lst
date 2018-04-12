@@ -10,6 +10,7 @@ kibbutz/model/form/SignUpForm.class
 kibbutz/SurveyPictureRepository.class
 kibbutz/SurveyRepository.class
 kibbutz/model/entity/SurveyPicture.class
+kibbutz/model/entity/Comment.class
 kibbutz/model/entity/ProofPicture.class
 kibbutz/SurveyController.class
 kibbutz/BeanConfig.class
@@ -24,6 +25,7 @@ kibbutz/model/form/SurveyForm.class
 kibbutz/ProofController.class
 kibbutz/Application.class
 kibbutz/FollowerController.class
+kibbutz/model/form/CommentForm.class
 kibbutz/model/entity/Choice.class
 kibbutz/SecurityConfig.class
 kibbutz/LoginController.class

@@ -9,10 +9,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.servlet.http.HttpServletResponse;
+import kibbutz.model.entity.Comment;
 import kibbutz.model.entity.ProofPicture;
 import kibbutz.model.entity.Survey;
 import kibbutz.model.entity.SurveyPicture;
 import kibbutz.model.entity.User;
+import kibbutz.model.form.CommentForm;
 import kibbutz.model.form.ProofForm;
 import kibbutz.model.form.SatisfiedForm;
 import org.h2.util.IOUtils;
@@ -22,10 +24,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -58,6 +62,8 @@ public class SurveyDisplayController {
         model.addAttribute("proofForm", new ProofForm());
         model.addAttribute("satisfiedForm", new SatisfiedForm());
         model.addAttribute("survey", theSurvey);
+        model.addAttribute("commentForm", new CommentForm());
+        
         if(theSurvey.getProof() != null){
             model.addAttribute("numSatisfied", theSurvey.getProof().getNumSatisfied());
             model.addAttribute("numDisatisfied", theSurvey.getProof().getNumDisatisfied());
@@ -65,8 +71,24 @@ public class SurveyDisplayController {
             .findFirst().orElse(null);
             model.addAttribute("voted", temp != null);
         }
+        
         return "survey-detail";
     }
+    
+    @PostMapping("survey/post_comment/{id}")
+    public ModelAndView postComment(@PathVariable("id") Long id, Model model, @SessionAttribute("user") User user,
+            @ModelAttribute("commentForm") CommentForm commentForm){
+        
+        User poster = userRepo.findUserByUsername(user.getUsername());
+        Survey theSurvey = surveyRepo.findOne(id);
+        theSurvey.getComments().add(new Comment(poster.getId(),
+                commentForm.getText(),poster.getUsername() ));
+        
+        surveyRepo.save(theSurvey);
+    
+        return new ModelAndView("redirect:/posted_survey?id=" + id);
+    }
+
     
     @RequestMapping(value="/survey_pic/{id}")
     public void getSurveyImage(HttpServletResponse response , @PathVariable("id") long imageId) throws IOException{

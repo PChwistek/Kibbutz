@@ -52,6 +52,13 @@ public class Survey {
     @JoinColumn(name = "surveyId")
     private List<Choice> choices = new ArrayList();
     
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JoinColumn(name = "surveyId")
+    private List<Comment> comments = new ArrayList();
+    
     @OneToOne(
         cascade = CascadeType.ALL,
         orphanRemoval = true
@@ -243,6 +250,20 @@ public class Survey {
      */
     public void setProof(Proof proof) {
         this.proof = proof;
+    }
+
+    /**
+     * @return the comments
+     */
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    /**
+     * @param comments the comments to set
+     */
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
   
     
