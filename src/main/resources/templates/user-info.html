@@ -20,9 +20,25 @@
             </div>
         </li>
     </ul>
+</div>
+<div>
     
     <h1> Your Voting History </h1> 
     <p> List some stuff here </p> 
+    
+    <h2> Followers </h2>
+    <li th:each="follower : ${followers}">
+        <div>
+            <p th:text="*{follower}" />
+        </div>
+    </li>
+    
+    <h2> Following </h2>
+    <li th:each="follower : ${following}">
+        <div>
+            <p th:text="*{follower}" />
+        </div>
+    </li>
     
 </div>
 </html>

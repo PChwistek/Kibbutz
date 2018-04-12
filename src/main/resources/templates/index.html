@@ -10,7 +10,7 @@
     <div th:if="${user.username == null}">
         <p>
            <form action="#" th:action="@{/login}" th:object="${loginForm}" method="post">     
-            <p>Username: <input type="text" th:field="*{username}"/>
+                <p>Username: <input type="text" th:field="*{username}"/>
                 Password: <input type="password" th:field="*{password}"/></p>
                 <input type='submit' value='Login' />
             </form>
@@ -32,10 +32,10 @@
             <li th:each="survey : ${surveys}">
                 <div>
                     <p th:text="${survey.title}" />
-                    <p th:text="${survey.author}" />
+                    <a th:href="'/profile?author=' + ${survey.author}"><p th:text="${survey.author}" /></a>
                     <p th:text="'Ongoing: ' + ${survey.active}"/>
                     <p th:text="${survey.text}" />     
-                     <img th:src="${survey.picture.id}" />
+                    <img th:if="${survey.picture != null}" th:src="${survey.picture.id}" />
                     <form action="#" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
                         <li th:each="choice: ${survey.choices}">
                             <input type="radio" name="${choiceForm.choiceOne}" value= "${choice.name}" th:text="${choice.name}" />

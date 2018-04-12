@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Kibbutz - User Profile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<div th:object="${author}">
+    <h1 th:text="*{username}" />
+    <a href="/"> Back to home </a>
+    <form th:action="@{'follow?id=' + *{id}}" method="post">
+         <input type="submit" value="Follow" />
+    </form> 
+</div>
+</html>
+

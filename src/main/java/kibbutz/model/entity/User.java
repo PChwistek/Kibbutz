@@ -8,12 +8,15 @@ package kibbutz.model.entity;
 import kibbutz.model.entity.Survey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import kibbutz.model.form.SignUpForm;
 
@@ -22,18 +25,20 @@ import kibbutz.model.form.SignUpForm;
  * @author Phil
  * 
  * https://spring.io/guides/gs/accessing-data-mysql/
+ * https://gist.github.com/ffbit/3343910
  * 
  */
+
 @Entity
 public class User {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Long userId;
     private String first;
     private String last;
     private String username;
-    private String password;    //should not be plaintext, but OK for now
+    private String password;    //hashed
     private String email;
   //  private Boolean emailConfirmed;
     private long karmaScore;
@@ -44,6 +49,17 @@ public class User {
     )
     @JoinColumn(name = "username")
     private List<Survey> surveys = new ArrayList();
+    
+    /* Not the best efficiency, but oh well 
+    */
+    
+    @ManyToMany
+    @JoinTable(name="followingTable")
+    private Set<User> following;
+    
+    @ManyToMany
+    @JoinTable(name="followerTable")
+    private Set<User> followers;
     
     public User() {}
     
@@ -59,14 +75,14 @@ public class User {
      * @return the id
      */
     public Long getId() {
-        return id;
+        return userId;
     }
 
     /**
      * @param id the id to set
      */
     public void setId(Long id) {
-        this.id = id;
+        this.userId = id;
     }
 
     /**
@@ -166,5 +182,36 @@ public class User {
     public void setSurveys(List<Survey> surveys) {
         this.surveys = surveys;
     }
+
+    /**
+     * @return the following
+     */
+    public Set<User> getFollowing() {
+        return following;
+    }
+
+    /**
+     * @param following the following to set
+     */
+    public void setFollowing(Set<User> following) {
+        this.following = following;
+    }
+
+    /**
+     * @return the followers
+     */
+    public Set<User> getFollowers() {
+        return followers;
+    }
+
+    /**
+     * @param followers the followers to set
+     */
+    public void setFollowers(Set<User> followers) {
+        this.followers = followers;
+    }
+
+ 
     
+
 }

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -40,7 +39,7 @@ public class LoginController {
     public RedirectView login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult, @ModelAttribute("user") User user, 
             SessionStatus status, RedirectAttributes attributes) {
         
-        User someUser = userRepo.getUserByUsername(loginForm.getUsername());
+        User someUser = userRepo.findUserByUsername(loginForm.getUsername());
         
         boolean validLogin = someUser != null && hasher.passwordMatch(loginForm.getPassword(), someUser.getPassword());
         

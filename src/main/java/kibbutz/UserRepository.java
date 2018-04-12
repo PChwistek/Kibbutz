@@ -6,9 +6,7 @@
 package kibbutz;
 
 import kibbutz.model.entity.User;
-import java.util.List;
 import org.springframework.data.repository.CrudRepository;
-
 
 /**
  *
@@ -16,7 +14,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface UserRepository extends CrudRepository<User, Long> {
     
-    User getUserByUsername(String username);
+    User findUserByUsername(String username);
     
     
 }

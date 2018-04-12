@@ -43,7 +43,7 @@ public class SignUpController {
         
         boolean invalidPassword = !signUpForm.passwordIsValid();
         boolean hasErrors = bindingResult.hasErrors();
-        boolean usernameNotUnique = userRepo.getUserByUsername(signUpForm.getUsername()) != null;
+        boolean usernameNotUnique = userRepo.findUserByUsername(signUpForm.getUsername()) != null;
         
         if(invalidPassword || hasErrors || usernameNotUnique){
             String errorMsg = "";

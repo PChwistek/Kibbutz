@@ -5,20 +5,23 @@
  */
 package kibbutz;
 
+import java.util.ArrayList;
 import kibbutz.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
  *
  * @author Phil
  */
-
 @Controller
+@SessionAttributes("user")
 public class UserController {
     
     @Autowired
@@ -29,9 +32,35 @@ public class UserController {
     
     @GetMapping("/user")
     public String userInfo(@SessionAttribute("user") User user, Model model) {
-       model.addAttribute("user", user);
-       model.addAttribute("posted", surveyRepo.findAll());
-       return "user-info";
+        
+        model.addAttribute("posted", surveyRepo.findAll());
+        
+        ArrayList<String> following = new ArrayList();
+        ArrayList<String> followers = new ArrayList();
+        
+        User theUser = userRepo.findUserByUsername(user.getUsername());
+        System.out.println("In user controller!");
+        
+        System.out.println(theUser.getFollowing().size());
+        
+        theUser.getFollowing().forEach((aUser) -> {
+            following.add(aUser.getUsername());
+        });        
+        
+        theUser.getFollowers().forEach((aUser) -> {
+            followers.add(aUser.getUsername());
+        });
+        
+        model.addAttribute("followers", followers);
+        model.addAttribute("following", following);
+        return "user-info";
+    }
+    
+    @GetMapping("/profile")
+    public String userProfile(@RequestParam("author") String author, Model model) {
+        
+        model.addAttribute("author", userRepo.findUserByUsername(author));
+        return "user-detail";
     }
     
 }

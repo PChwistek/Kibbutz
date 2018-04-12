@@ -10,11 +10,13 @@
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/form/SurveyForm.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/UserRepository.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/ProofPicture.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/FollowerController.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/form/ChoiceForm.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/User.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/ScheduledController.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/VoteController.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SignUpController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SurveyDisplayController.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/HomeController.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/UserController.java
 /Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/Choice.java

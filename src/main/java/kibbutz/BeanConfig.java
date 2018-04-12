@@ -5,8 +5,10 @@
  */
 package kibbutz;
 
+import javax.persistence.EntityManagerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -25,6 +27,12 @@ public class BeanConfig {
         return new PasswordHasher();
     }
     
+    @Bean
+    public HibernateJpaSessionFactoryBean sessionFactory(EntityManagerFactory emf) {
+         HibernateJpaSessionFactoryBean factory = new HibernateJpaSessionFactoryBean();
+         factory.setEntityManagerFactory(emf);
+         return factory;
+    }
    
     
 }

@@ -11,6 +11,7 @@ kibbutz/model/entity/SurveyPicture.class
 kibbutz/model/entity/ProofPicture.class
 kibbutz/SurveyController.class
 kibbutz/BeanConfig.class
+kibbutz/SurveyDisplayController.class
 kibbutz/ScheduledController.class
 kibbutz/model/form/ChoiceForm.class
 kibbutz/model/form/LoginForm.class
@@ -18,6 +19,7 @@ kibbutz/UserRepository.class
 kibbutz/model/entity/Survey.class
 kibbutz/model/form/SurveyForm.class
 kibbutz/Application.class
+kibbutz/FollowerController.class
 kibbutz/model/entity/Choice.class
 kibbutz/SecurityConfig.class
 kibbutz/LoginController.class

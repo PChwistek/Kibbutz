@@ -35,6 +35,11 @@ public class Application {
                 root.setUsername("pchwis");
                 root.setPassword(hasher.hashPassword("123"));
                 repository.save(root);
+                
+                User root2 = new User();
+                root2.setUsername("pchwis2");
+                root2.setPassword(hasher.hashPassword("123"));
+                repository.save(root2);
              
                 // fetch all customers
                 /*

@@ -5,7 +5,6 @@
  */
 package kibbutz;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.io.IOException;
 import kibbutz.model.form.SurveyForm;
 import kibbutz.model.entity.Survey;
