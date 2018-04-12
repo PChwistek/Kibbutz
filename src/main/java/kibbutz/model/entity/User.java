@@ -7,6 +7,7 @@ package kibbutz.model.entity;
 
 import kibbutz.model.entity.Survey;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -55,10 +56,12 @@ public class User {
     
     @ManyToMany
     @JoinTable(name="followingTable")
+    @JoinColumn(name="username")
     private Set<User> following;
     
     @ManyToMany
     @JoinTable(name="followerTable")
+    @JoinColumn(name="username")
     private Set<User> followers;
     
     public User() {}

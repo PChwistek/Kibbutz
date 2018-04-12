@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
@@ -36,7 +37,7 @@ public class HomeController {
     private UserRepository userRepo;
     
     @Autowired
-    private SurveyPictureRepository picRepo;
+    private SurveyPictureRepository surveyPicRepo;
     
     @Autowired
     private SurveyRepository surveyRepo;
@@ -48,20 +49,28 @@ public class HomeController {
     
     @GetMapping("/")
     public String index(@ModelAttribute("user") User user, Model model) {
+        
+        List<Survey> allActive = surveyRepo.findAllActive();
+        if(!allActive.isEmpty()){
+            long id = allActive.get(0).getPicture().getSurveyId();
+            System.out.println(id);
+        }
         model.addAttribute("loginForm", new LoginForm());
         model.addAttribute("choiceForm", new ChoiceForm());        
-        model.addAttribute("surveys", surveyRepo.findAllActive());
+        model.addAttribute("surveys", allActive);
         return "index";
     }
     
+      
     @RequestMapping(value="/{id}")
     public void getSurveyImage(HttpServletResponse response , @PathVariable("id") long imageId) throws IOException{
 
-      SurveyPicture thePic = picRepo.getSurveyPictureById(imageId);
+      SurveyPicture thePic = surveyPicRepo.findSurveyPictureById(imageId);
       response.setContentType(thePic.getImageType());
       InputStream in1 = new ByteArrayInputStream(thePic.getPostPic());
       IOUtils.copy(in1, response.getOutputStream());        
     }
+    
     
     
     

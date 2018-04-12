@@ -1,21 +1,41 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Kibbutz - Survey Detail</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-<div>
-    <a href="/"> Back to home </a>
-    <p th:text="${survey.title}" />
-    <p th:text="${survey.author}" />
-    <p th:text="'Ongoing: ' + ${survey.active}"/>
-    <p th:text="${survey.text}" />     
-    <img th:src="${survey.picture.id}" />
-    <li th:each="choice : ${survey.choices}">
-        <p th:text="${choice.name} + '; Votes:  ' + ${choice.votes}" />
-    </li>
-</div>
-    
-</body>
+    <head>
+        <title>Kibbutz - Survey Detail</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <div>
+            <a href="/"> Back to home </a>
+            <h1 th:text="${survey.title}" />
+            <p th:text="${survey.author}" />
+            <p th:text="'Ongoing: ' + ${survey.active}"/>
+            <p th:text="${survey.text}" />     
+            <img th:if="${survey.picture != null}" th:src="${survey.picture.id}" />
+            <li th:each="choice : ${survey.choices}">
+                <p th:text="${choice.name} + '; Votes:  ' + ${choice.votes}" />
+            </li>
+            <h2> Proof </h2>
+            <div th:if="${user.username == survey.author and survey.proof == nul}">
+                <p> Upload Proof </p>
+                <form action="#" th:action="@{'proof/post/' + ${survey.surveyId}}" th:object="${proofForm}" enctype="multipart/form-data" method="post">    
+                    <label for="file">Choose file to upload</label>
+                    <input type="file" name="file" accept="image/*"></input>
+                    <p></p>
+                    <p> Enter a comment <input type="text" th:field="*{text}" /></p>
+                    <input type='submit' value='Submit' />
+                </form>
+            </div>
+            <img th:if="${survey.proof != null}" th:src="${survey.proof.picture.id}" />
+            <div th:unless="${user.username == survey.author and survey.proof != null}">
+                <form action="#" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
+                    <input type="radio" name="" value= "" th:text="satisfied" />
+                    <input type="radio" name="" value= "" th:text="unsatisfied" />
+                    <input th:if="${user.username != null}" type="submit" value="Vote"/>
+                </form> 
+            </div>
+
+        </div>
+
+    </body>
 </html>

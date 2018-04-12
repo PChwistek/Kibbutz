@@ -22,7 +22,7 @@ public class SurveyPicture {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    public Long id;
+    public long id;
     private String imageType;
     @Lob
     private byte[] postPic;

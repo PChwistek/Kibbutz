@@ -59,6 +59,13 @@ public class Survey {
     @JoinColumn(name = "surveyId")
     private SurveyPicture picture;
     
+    @OneToOne(
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    @JoinColumn(name = "surveyId")
+    private Proof proof;
+    
     public Survey(){};
     
     public Survey(SurveyForm surveyForm){
@@ -222,6 +229,20 @@ public class Survey {
      */
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    /**
+     * @return the proof
+     */
+    public Proof getProof() {
+        return proof;
+    }
+
+    /**
+     * @param proof the proof to set
+     */
+    public void setProof(Proof proof) {
+        this.proof = proof;
     }
   
     

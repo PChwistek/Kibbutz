@@ -9,7 +9,7 @@
     <span th:text="'Username: ' + *{username}"></span>
     <a href="/"> <p> Back to home </p> </a>
     
-    <h1> Your Posts </h1>
+    <h1> Posts </h1>
     <ul>
         <li th:each="survey : ${posted}">
             <div>
@@ -29,14 +29,14 @@
     <h2> Followers </h2>
     <li th:each="follower : ${followers}">
         <div>
-            <p th:text="*{follower}" />
+             <a th:href="'/profile?author=' + *{follower}"><p th:text="*{follower}" /> </a>
         </div>
     </li>
     
     <h2> Following </h2>
     <li th:each="follower : ${following}">
         <div>
-            <p th:text="*{follower}" />
+            <a th:href="'/profile?author=' + *{follower}"><p th:text="*{follower}" /></a>
         </div>
     </li>
     

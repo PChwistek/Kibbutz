@@ -10,11 +10,12 @@ import kibbutz.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -33,15 +34,12 @@ public class UserController {
     @GetMapping("/user")
     public String userInfo(@SessionAttribute("user") User user, Model model) {
         
-        model.addAttribute("posted", surveyRepo.findAll());
-        
         ArrayList<String> following = new ArrayList();
         ArrayList<String> followers = new ArrayList();
         
         User theUser = userRepo.findUserByUsername(user.getUsername());
-        System.out.println("In user controller!");
         
-        System.out.println(theUser.getFollowing().size());
+        model.addAttribute("posted", theUser.getSurveys());
         
         theUser.getFollowing().forEach((aUser) -> {
             following.add(aUser.getUsername());
@@ -51,16 +49,31 @@ public class UserController {
             followers.add(aUser.getUsername());
         });
         
+        model.addAttribute("posted", theUser.getSurveys());
         model.addAttribute("followers", followers);
         model.addAttribute("following", following);
         return "user-info";
     }
     
     @GetMapping("/profile")
-    public String userProfile(@RequestParam("author") String author, Model model) {
+    public ModelAndView userProfile(@RequestParam("author") String author, ModelMap model, @SessionAttribute("user") User user) {
         
+        user = userRepo.findUserByUsername(user.getUsername());
+        
+        User theUser = user.getFollowing().stream().filter(aUser -> aUser.getUsername().equals(author))
+            .findFirst().orElse(null);
+        
+        boolean isFollowing = theUser != null;
+        
+        if(user.getUsername().equalsIgnoreCase(author)){
+            return new ModelAndView("redirect:/user");
+        }
+        
+        model.addAttribute("posted", userRepo.findUserByUsername(author).getSurveys());
+        model.addAttribute("isFollowing", isFollowing);
+        model.addAttribute("user", user);
         model.addAttribute("author", userRepo.findUserByUsername(author));
-        return "user-detail";
+        return new ModelAndView("user-detail", model);
     }
     
 }

@@ -35,7 +35,7 @@
                     <a th:href="'/profile?author=' + ${survey.author}"><p th:text="${survey.author}" /></a>
                     <p th:text="'Ongoing: ' + ${survey.active}"/>
                     <p th:text="${survey.text}" />     
-                    <img th:if="${survey.picture != null}" th:src="${survey.picture.id}" />
+                    <img th:src="${survey.picture.id}" />                     
                     <form action="#" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
                         <li th:each="choice: ${survey.choices}">
                             <input type="radio" name="${choiceForm.choiceOne}" value= "${choice.name}" th:text="${choice.name}" />

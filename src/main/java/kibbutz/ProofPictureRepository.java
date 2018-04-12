@@ -5,17 +5,16 @@
  */
 package kibbutz;
 
-import kibbutz.model.entity.SurveyPicture;
+import kibbutz.model.entity.ProofPicture;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author Phil
  */
-public interface SurveyPictureRepository extends CrudRepository<SurveyPicture, Long> {
+public interface ProofPictureRepository extends CrudRepository<ProofPicture, Long> {
     
-    SurveyPicture findSurveyPictureById(long id);
+    ProofPicture findProofPictureById(long id);
 
     
-}    
-
+}
