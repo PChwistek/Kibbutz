@@ -18,6 +18,7 @@ kibbutz/SurveyDisplayController.class
 kibbutz/ScheduledController.class
 kibbutz/model/form/ChoiceForm.class
 kibbutz/model/form/ProofForm.class
+.netbeans_automatic_build
 kibbutz/model/form/LoginForm.class
 kibbutz/UserRepository.class
 kibbutz/model/entity/Survey.class
