@@ -35,7 +35,6 @@ public class VoteController {
     private UserRepository userRepo;
     
     
-    
     @PostMapping("/vote")
     public String vote(@RequestParam("id") Long id, @ModelAttribute ChoiceForm choice, @SessionAttribute("user") User user, 
             Model model ){

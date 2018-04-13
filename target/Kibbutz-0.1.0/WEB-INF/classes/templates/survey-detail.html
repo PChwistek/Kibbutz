@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Kibbutz - Survey Detail</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <div>
+            <a href="/"> Back to home </a>
+            <h1 th:text="${survey.title}" />
+            <a th:href="'/profile?author=' + ${survey.author}"><p th:text="${survey.author}" /></a>
+            <p th:text="'Ongoing: ' + ${survey.active}"/>
+            <p th:text="${survey.text}" />     
+            <img th:if="${survey.picture != null}" th:src="${survey.picture.id}" />
+            <li th:each="choice : ${survey.choices}">
+                <p th:text="${choice.name} + '; Votes:  ' + ${choice.votes}" />
+            </li>
+            <h2> Proof </h2>
+            <div th:if="${user.username == survey.author and survey.proof == nul}">
+                <p> Upload Proof </p>
+                <form action="#" th:action="@{'proof/post/' + ${survey.surveyId}}" th:object="${proofForm}" enctype="multipart/form-data" method="post">    
+                    <label for="file">Choose file to upload</label>
+                    <input type="file" name="file" accept="image/*"></input>
+                    <p></p>
+                    <p> Enter a comment <input type="text" th:field="*{text}" /></p>
+                    <input type='submit' value='Submit' />
+                </form>
+            </div>
+            <img th:if="${survey.proof != null}" th:src="${survey.proof.picture.id}" />
+            <div th:unless="${user.username == survey.author or survey.proof == null or voted == true}">
+                <form action="#" th:action="@{'proof/post_vote/' + ${survey.surveyId}}" th:object="${satisfiedForm}" method="post">
+                    <input type="radio" th:name="${satisfiedForm.satisfaction}" th:field="${satisfiedForm.satisfaction}" value= "satisfied" th:text="satisfied" />
+                    <input type="radio" th:name="${satisfiedForm.satisfaction}"  th:field="${satisfiedForm.satisfaction}" value= "unsatisfied" th:text="unsatisfied" />
+                    <input th:if="${user.username != null}" type="submit" value="Vote"/>
+                </form> 
+            </div>
+            <div th:if="${numSatisfied != null}">
+                <p th:text="'Satisfied: ' + ${numSatisfied}" />
+                <p th:text="'Disatisfied: ' + ${numDisatisfied}" />
+            </div>
+            <h2> Comments </h2>
+            <form action="#" th:action="@{'survey/post_comment/' + ${survey.surveyId}}" th:object="${commentForm}" method="post">    
+                <textarea th:field="*{text}" rows="10" cols="50"></textarea>
+                <input type='submit' value='Submit' />
+            </form>
+            <li th:each="comment: ${survey.comments}">
+                <a th:href="{'/profile?author=' + *{comment.username}}">
+                    <p th:text="*{comment.username}" />
+                </a>
+                <p th:text="*{comment.text}" />
+                <br></br>
+            </li>
+        </div>
+    </body>
+</html>
