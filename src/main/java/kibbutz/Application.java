@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class Application {
+public class Application extends SpringBootServletInitializer {
     
     // private static final Logger log = LoggerFactory.getLogger(Application.class);
     
@@ -25,6 +27,11 @@ public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+    }
+    
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
+        return application.sources(Application.class);
     }
     
     @Bean
@@ -40,32 +47,6 @@ public class Application {
                 root2.setUsername("pchwis2");
                 root2.setPassword(hasher.hashPassword("123"));
                 repository.save(root2);
-             
-                // fetch all customers
-                /*
-                log.info("Customers found with findAll():");
-                log.info("-------------------------------");
-                for (User user : repository.findAll()) {
-                        log.info(user.toString());
-                }
-                log.info("");
-
-                // fetch an individual customer by ID
-                User user = repository.findOne(1L);
-                log.info("Customer found with findOne(1L):");
-                log.info("--------------------------------");
-                log.info(user.toString());
-                log.info("");
-
-                // fetch customers by last name
-                log.info("Customer found with findByLastName('Bauer'):");
-                log.info("--------------------------------------------");
-                for (User user : repository.findByUsername("Phil")) {
-                        log.info(bauer.toString());
-                }
-                log.info("");
-                
-                */
         };
     }
 
