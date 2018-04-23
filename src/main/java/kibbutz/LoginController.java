@@ -6,16 +6,19 @@
 package kibbutz;
 
 import javax.validation.Valid;
+import javax.websocket.Session;
 import kibbutz.model.entity.User;
 import kibbutz.model.form.LoginForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -36,7 +39,7 @@ public class LoginController {
     
          
     @PostMapping("/login")
-    public RedirectView login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult, @ModelAttribute("user") User user, 
+    public RedirectView login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult, 
             SessionStatus status, RedirectAttributes attributes) {
         
         User someUser = userRepo.findUserByUsername(loginForm.getUsername());
@@ -48,9 +51,7 @@ public class LoginController {
             attributes.addFlashAttribute("status", "Incorrect Login Credentials!");
             return new RedirectView("/");
         }
-        
-        user.setId(someUser.getId());
-        attributes.addFlashAttribute("status", "logged-in" + user.getUsername());
+        attributes.addFlashAttribute("user", someUser);
         return new RedirectView("/");
         
     }

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -31,15 +33,9 @@ public class SignUpController {
     @Autowired
     private PasswordHasher hasher;
     
-    @GetMapping("/sign-up")
-    public String signUp(Model model) {
-        model.addAttribute("signUpForm", new SignUpForm());
-        model.addAttribute("message", "");
-        return "sign-up";
-    }
-    
     @PostMapping("/sign-up")
-    public String createAccount(@Valid @ModelAttribute SignUpForm signUpForm, BindingResult bindingResult, Model model){
+    public RedirectView createAccount(@Valid @ModelAttribute SignUpForm signUpForm, 
+            BindingResult bindingResult, Model model, RedirectAttributes attributes){
         
         boolean invalidPassword = !signUpForm.passwordIsValid();
         boolean hasErrors = bindingResult.hasErrors();
@@ -54,15 +50,17 @@ public class SignUpController {
             } else {
                 errorMsg = "Username not unique";
             }
-            model.addAttribute("message", errorMsg);
-            return "sign-up";
+            attributes.addFlashAttribute("errorMsg", errorMsg);
+            return new RedirectView("/");            
         }
         
         String hashedPass = hasher.hashPassword(signUpForm.getPassword());
         signUpForm.setPassword(hashedPass);
         
-        userRepo.save(new User(signUpForm));
-        return "account-created";
+        User newUser = new User(signUpForm);
+        userRepo.save(newUser);
+        attributes.addFlashAttribute("user", newUser);
+        return new RedirectView("/");
     }
     
     

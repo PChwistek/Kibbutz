@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <nav class="navbar is-white" role="navigation" th:fragment="header">
+        <div class="navbar-brand">
+            <div class="navbar-item">
+                <span>kibbutz</span>
+            </div>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <div class="navbar-item">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Find by username" />
+                        </div>
+                        <div class="control">
+                            <a class="button is-info">
+                                Search
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="navbar-item">
+                     <a class="button" href="/survey"> <h3> Post a Survey </h3> </a>
+                </div>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <a href="/user"> Your Account </a>
+                </div>
+                <div class="navbar-item">
+                    <form th:action="@{/logout}" method="get">
+                        <input class="button is-small" type="submit" value="Logout"/>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </nav>
+</html>

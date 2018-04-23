@@ -1,23 +1,74 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Kibbutz - Post a Survey</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-<h1>Post Your Survey!</h1>
-    <a href="/"> Back to home page </a>
-   <form action="#" th:action="@{survey/post}" th:object="${surveyForm}" enctype="multipart/form-data" method="post">    
-       <p> Enter a title: <input type="text" th:field="*{title}" /> </p>
-       <textarea th:field="*{text}" rows="10" cols="50"></textarea>
-       <br></br>
-        <label for="file">Choose file to upload</label>
-        <input type="file" name="file" accept="image/*"></input>
-        <p> Option 1: <input type="text" th:field="*{choiceOne}" /> </p>
-        <p> Option 2: <input type="text" th:field="*{choiceTwo}" /> </p>
-        <p> Time Limit: 5 minutes (more options to come!)</p>
-        <br></br>
-        <input type='submit' value='Submit' />
-   </form>
-   </body>
+    <head>
+        <title>Kibbutz - Post a Survey</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bulma.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/homepage.css}"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div th:replace="fragments/header :: header">... </div>
+        <div class="container">
+            <section>
+                <div class="column is-8 is-offset-2">
+                    <div class="card article">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content has-text-centered">
+                                    <p class="title article-title">Post a Survey!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content article-body">
+                            <form action="#" th:action="@{survey/post}" th:object="${surveyForm}" enctype="multipart/form-data" method="post">    
+                                <div class="field">
+                                    <input class = "input" type="text" th:field="*{title}" placeholder="Title"/>
+                                </div>
+                                <div class="field">
+                                    <textarea th:field="*{text}" class="textarea" placeholder="Comment" ></textarea>
+                                </div>
+                                <div class="field">
+                                                                    <input class="input" type="text" th:field="*{choiceOne}" placeholder="Option 1" /> 
+                                </div>
+                                <div class="field">
+                                                                    <input class="input" type="text" th:field="*{choiceTwo}" placeholder="Option 2" />
+
+                                </div>
+                                <p> Time Limit: 5 minutes (more options to come!)</p>
+                                <div class="field">
+                                    <div class="file has-name is-fullwidth is-small">
+                                        <label class="file-label">
+                                            <input type="file" id="file" class="file-input" name="file" accept="image/*"></input>
+                                            <span class="file-cta">
+                                                <span class="file-icon">
+                                                    <i class="fas fa-upload"></i>
+                                                </span>
+                                                <span class="file-label">
+                                                    Choose a file…
+                                                </span>
+                                            </span>
+                                            <span id="file-name" class="file-name">
+                                            </span>
+                                        </label>
+                                    </div>                 
+                                </div>
+                                <div class="field has-text-centered">
+                                    <input class= "button is-primary" type='submit' value='Submit' />
+                                </div>
+                                <br></br>
+                                                                <br></br>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div th:replace="fragments/footer :: footer">... </div>
+    </body>
+    <script>
+        $('#file').on("change", function(){ $('#file-name').text($('#file').val()) });
+    </script>
 </html>

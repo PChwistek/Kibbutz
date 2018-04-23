@@ -17,6 +17,8 @@ public class SignUpForm {
     @NotNull @NotEmpty
     private String username;
     @NotNull @NotEmpty
+    private String confirmUsername;
+    @NotNull @NotEmpty
     private String password;
     @NotNull @NotEmpty
     private String confirmPassword;
@@ -31,7 +33,7 @@ public class SignUpForm {
     
     public boolean passwordIsValid(){
         
-        return password.equals(confirmPassword);
+        return password.equals(confirmPassword) && username.equals(confirmUsername);
     }
 
     /**
@@ -116,6 +118,20 @@ public class SignUpForm {
      */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    /**
+     * @return the confirmUsername
+     */
+    public String getConfirmUsername() {
+        return confirmUsername;
+    }
+
+    /**
+     * @param confirmUsername the confirmUsername to set
+     */
+    public void setConfirmUsername(String confirmUsername) {
+        this.confirmUsername = confirmUsername;
     }
     
 }

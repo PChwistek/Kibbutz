@@ -17,11 +17,13 @@ import kibbutz.model.entity.SurveyPicture;
 import kibbutz.model.form.LoginForm;
 import kibbutz.model.form.ChoiceForm;
 import kibbutz.model.entity.User;
+import kibbutz.model.form.SignUpForm;
 import org.h2.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +33,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @SessionAttributes("user")
+//@RequestMapping("/kibbutz")
 public class HomeController {
     
     @Autowired
@@ -42,23 +45,20 @@ public class HomeController {
     @Autowired
     private SurveyRepository surveyRepo;
     
-    @ModelAttribute("user")
-    public User setUpUserForm() {
-        return new User();
-    }
-    
     @GetMapping("/")
-    public String index(@ModelAttribute("user") User user, Model model) {
+    public String index(Model model) {
+        
+        if(!model.containsAttribute("user")){
+            model.addAttribute("loginForm", new LoginForm());
+            model.addAttribute("signUpForm", new SignUpForm());
+            return "index"; 
+        }
         
         List<Survey> allActive = surveyRepo.findAllActive();
-        if(!allActive.isEmpty()){
-            long id = allActive.get(0).getPicture().getSurveyId();
-            System.out.println(id);
-        }
-        model.addAttribute("loginForm", new LoginForm());
-        model.addAttribute("choiceForm", new ChoiceForm());        
         model.addAttribute("surveys", allActive);
-        return "index";
+        model.addAttribute("choiceForm", new ChoiceForm());
+
+        return "index-signed-in";
     }
     
       
