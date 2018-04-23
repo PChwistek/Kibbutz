@@ -7,6 +7,7 @@ package kibbutz;
 
 import java.util.ArrayList;
 import kibbutz.model.entity.User;
+import kibbutz.model.form.ChoiceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,10 +51,11 @@ public class UserController {
         });
         
         model.addAttribute("history", theUser.getVotingHistory());
-        model.addAttribute("posted", theUser.getSurveys());
+        model.addAttribute("account", theUser);
         model.addAttribute("followers", followers);
+        model.addAttribute("choiceForm", new ChoiceForm());
         model.addAttribute("following", following);
-        return "user-info";
+        return "user-detail";
     }
     
     @GetMapping("/profile")
@@ -72,10 +74,16 @@ public class UserController {
         
         User temp = userRepo.findUserByUsername(author);
         
+        if(temp == null){
+            return new ModelAndView("redirect:/");
+        }
+        
+        model.addAttribute("history", temp.getVotingHistory());
         model.addAttribute("posted", temp.getSurveys());
+        model.addAttribute("choiceForm", new ChoiceForm());
         model.addAttribute("isFollowing", isFollowing);
         model.addAttribute("user", user);
-        model.addAttribute("author", userRepo.findUserByUsername(author));
+        model.addAttribute("account", userRepo.findUserByUsername(author));
         return new ModelAndView("user-detail", model);
     }
     

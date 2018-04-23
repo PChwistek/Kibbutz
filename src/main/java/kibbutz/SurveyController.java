@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -43,7 +44,7 @@ public class SurveyController {
     }
     
     @PostMapping("/post")
-    public String postSurvey(@Valid @ModelAttribute SurveyForm surveyForm,
+    public RedirectView postSurvey(@Valid @ModelAttribute SurveyForm surveyForm,
             @SessionAttribute("user") User user, @RequestParam("file") MultipartFile file){
         
         Survey theSurvey = new Survey(surveyForm);
@@ -72,7 +73,7 @@ public class SurveyController {
         User someUser = userRepo.findOne(user.getId());
         someUser.getSurveys().add(theSurvey);
         userRepo.save(someUser);
-        return "survey-posted";
+        return new RedirectView("/user");
     }
     
 }

@@ -1,0 +1,125 @@
+<div class = "container" th:object="${account}" th:fragment="account">
+    <div class="columns">
+        <div class="column is-2">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title" th:text="*{username}" />
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        Karma: 
+                        <a id='followers'> Followers: </a>
+                        <a id='following'> Following: </a>
+                    </div>
+                </div>
+                <div class="card-footer">                
+                    <div class="card-footer-item" th:if="${isFollowing == false}">
+                        <form  th:action="@{'follow?id=' + *{id}}" method="post">
+                            <input class='button' type="submit" value="Follow" />
+                        </form>
+                    </div>
+                    <div class="card-footer-item" th:unless="${isFollowing == false}">
+                        <p> Following </p>
+                    </div>
+                </div>
+            </div>
+            <div class="card is-history">
+                <header class="card-content">
+                    <a id="voting"> <p class="content">  Voting History </p> </a>
+                </header>
+            </div>
+        </div>
+        <div class="column is-8">
+            <div class="box content">
+                <div th:if="${#lists.size(history) == 0}" class="has-text-centered">
+                    <p> No posts to show... </p>
+                </div>
+                <ol>
+                    <li th:each="survey : ${posted}">
+                        <article class="post">
+                            <h4>
+                                <a th:href="@{'posted_survey?id=' + ${survey.surveyId}}"> 
+                                    <p th:text="${survey.title}" /> 
+                                </a>
+                            </h4>
+                            <p> submitted by
+                                <a th:href="'/profile?author=' + ${survey.author}">
+                                    <span th:text="${survey.author}" />
+                                </a>   
+                            </p>
+                            <div class="media">
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p th:text="${survey.text}" class="article-subtitle" />     
+                                        <img class="image" th:src="${survey.picture.id}" /> 
+                                        <form action="#" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
+                                            <div class="control">
+                                                <span th:each="choice: ${survey.choices}">
+                                                    <label class="radio">
+                                                        <input type="radio" th:name="${choiceForm.choiceOne}" th:field="${choiceForm.choiceOne}" th:value= "${choice.name}" th:text="${' ' + choice.name}" />
+                                                        <span th:text="': ' +  ${choice.votes}" />  
+                                                    </label>
+                                                </span>
+                                            </div>
+                                            <input class="button" type="submit" value="Vote"/>
+                                        </form> 
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div id="voting-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <p> Voting </p>
+        </div>
+        <button id='voting-close' class="modal-close is-large" aria-label="close"></button>
+    </div>
+    <div id="followers-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <p> Followers </p>
+        </div>
+        <button id='followers-close' class= "modal-close is-large" aria-label="close"></button>
+    </div>
+    <div id="following-modal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <p> Following </p>
+        </div>
+        <button id='following-close' class="modal-close is-large" aria-label="close"></button>
+    </div>
+    <script>
+        $(document).ready(function () {
+
+            $('#voting').click(function () {
+                $('#voting-modal').addClass('is-active');
+            });
+            $('#voting-close').click(function () {
+                $('#voting-modal').removeClass('is-active');
+            });
+            
+            $('#followers').click(function () {
+                $('#followers-modal').addClass('is-active');
+            });
+            $('#followers-close').click(function () {
+                $('#followers-modal').removeClass('is-active');
+            });  
+            
+            $('#following').click(function () {
+                $('#following-modal').addClass('is-active');
+            });
+            $('#following-close').click(function () {
+                $('#following-modal').removeClass('is-active');
+            });
+            
+            
+        });
+    </script>
+</div>
+

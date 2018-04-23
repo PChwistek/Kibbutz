@@ -1,33 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Kibbutz - User Profile</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <head>
+        <title>Kibbutz - User Profile</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" th:href="@{/css/bulma.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/homepage.css}"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div th:replace="fragments/header :: header">... </div>
 
-</head>
-<div th:object="${author}">
-    <h1 th:text="*{username}" />
-    <a href="/"> Back to home </a>
-    <div th:if="${isFollowing == false}">
-        <form th:action="@{'follow?id=' + *{id}}" method="post">
-            <input type="submit" value="Follow" />
-        </form>
-    </div>
-    <div th:unless="${isFollowing == false}">
-        <p> Following </p>
-    </div>
-    <h1> Posts </h1>
-    <ul>
-        <li th:each="survey : ${posted}">
-            <div>
-                <a th:href="@{'posted_survey?id=' + ${survey.surveyId}}"> 
-                    <p th:text="${survey.title}" />
-                </a>
-                <p th:text="'Ongoing: ' + ${survey.active}"/>
-            </div>
-        </li>
-    </ul>
-</div>
+        <div th:replace="fragments/account :: account"> ... </div>
+
+        <div th:replace="fragments/footer :: footer">... </div>
+    </body>
 </html>
 

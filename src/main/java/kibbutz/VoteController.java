@@ -36,7 +36,7 @@ public class VoteController {
     
     
     @PostMapping("/vote")
-    public String vote(@RequestParam("id") Long id, @ModelAttribute ChoiceForm choice, @SessionAttribute("user") User user, 
+    public RedirectView vote(@RequestParam("id") Long id, @ModelAttribute ChoiceForm choice, @SessionAttribute("user") User user, 
             Model model ){
         
         Survey theSurvey = surveyRepo.findOne(id);
@@ -54,12 +54,6 @@ public class VoteController {
         
         userRepo.save(theUser);
         surveyRepo.save(theSurvey);
-        return "voted";
+        return new RedirectView("/");
     }
-    
-    @GetMapping("/voted")
-    public String voted(){
-        return "voted";
-    }
-    
 }

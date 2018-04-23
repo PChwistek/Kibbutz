@@ -4,10 +4,12 @@
         <title>Kibbutz - Survey Detail</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" th:href="@{/css/bulma.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/homepage.css}"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous" />
     </head>
     <body>
+        <div th:replace="fragments/header :: header">... </div>
         <div>
-            <a href="/"> Back to home </a>
             <h1 th:text="${survey.title}" />
             <a th:href="'/profile?author=' + ${survey.author}"><p th:text="${survey.author}" /></a>
             <p th:text="'Ongoing: ' + ${survey.active}"/>
@@ -52,5 +54,7 @@
                 <br></br>
             </li>
         </div>
+        <div th:replace="fragments/footer :: footer">... </div>
     </body>
+    
 </html>
