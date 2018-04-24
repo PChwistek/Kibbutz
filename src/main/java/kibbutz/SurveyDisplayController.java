@@ -14,6 +14,7 @@ import kibbutz.model.entity.ProofPicture;
 import kibbutz.model.entity.Survey;
 import kibbutz.model.entity.SurveyPicture;
 import kibbutz.model.entity.User;
+import kibbutz.model.form.ChoiceForm;
 import kibbutz.model.form.CommentForm;
 import kibbutz.model.form.ProofForm;
 import kibbutz.model.form.SatisfiedForm;
@@ -63,6 +64,7 @@ public class SurveyDisplayController {
         model.addAttribute("satisfiedForm", new SatisfiedForm());
         model.addAttribute("survey", theSurvey);
         model.addAttribute("commentForm", new CommentForm());
+        model.addAttribute("choiceForm", new ChoiceForm());
         
         if(theSurvey.getProof() != null){
             model.addAttribute("numSatisfied", theSurvey.getProof().getNumSatisfied());

@@ -6,55 +6,183 @@
         <link rel="stylesheet" type="text/css" th:href="@{/css/bulma.min.css}"/>
         <link rel="stylesheet" type="text/css" th:href="@{/css/homepage.css}"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
         <div th:replace="fragments/header :: header">... </div>
-        <div>
-            <h1 th:text="${survey.title}" />
-            <a th:href="'/profile?author=' + ${survey.author}"><p th:text="${survey.author}" /></a>
-            <p th:text="'Ongoing: ' + ${survey.active}"/>
-            <p th:text="${survey.text}" />     
-            <img th:if="${survey.picture != null}" th:src="${survey.picture.id}" />
-            <li th:each="choice : ${survey.choices}">
-                <p th:text="${choice.name} + '; Votes:  ' + ${choice.votes}" />
-            </li>
-            <h2> Proof </h2>
-            <div th:if="${user.username == survey.author and survey.proof == nul}">
-                <p> Upload Proof </p>
-                <form action="#" th:action="@{'proof/post/' + ${survey.surveyId}}" th:object="${proofForm}" enctype="multipart/form-data" method="post">    
-                    <label for="file">Choose file to upload</label>
-                    <input type="file" name="file" accept="image/*"></input>
-                    <p></p>
-                    <p> Enter a comment <input type="text" th:field="*{text}" /></p>
-                    <input type='submit' value='Submit' />
-                </form>
+        <div class="container">
+            <div class="columns">
+                <div class="column is-2">
+                    <div class="card" th:if= "${user.username == survey.author and survey.proof == null}">
+                        <header class="card-header">
+                            <p class="card-header-title"> Post Proof </p>
+                        </header>
+                        <div class="card-content">
+                            <form action="#" th:action="@{'proof/post/' + ${survey.surveyId}}" th:object="${proofForm}" enctype="multipart/form-data" method="post">  
+                                <div class='field'>
+                                    <div class="file has-name is-small is-boxed">
+                                        <label class="file-label">
+                                            <input class='file-input' id='file' type="file" name="file" accept="image/*" />
+                                            <span class="file-cta">
+                                                <span class="file-icon">
+                                                    <i class="fas fa-upload"></i>
+                                                </span>
+                                                <span class="file-label">
+                                                    Choose a file…
+                                                </span>
+                                            </span>
+                                            <span id='file-name' class="file-name">
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class='field'>
+                                    <input class='input is-small' type="text" th:field="*{text}" placeholder='Enter a quick comment'/>
+                                </div>
+                                <div class="card-footer">                
+                                    <div class="card-footer-item has-text-centered" >
+                                        <input class='button' type='submit' value='Submit' />
+                                    </div>
+                                </div>                               
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card" th:unless= "${survey.proof == null}">
+                        <header class="card-header">
+                            <p class="card-header-title"> Karma </p>
+                        </header>
+                        <div class="card-content">
+                            <div th:if="${numSatisfied != null}">
+                                <p> Potential: </p>
+                                <p> Score: </p>
+                                <p th:text="'Satisfied: ' + ${numSatisfied}" />
+                                <p th:text="'Disatisfied: ' + ${numDisatisfied}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-8">
+                    <div class="box content">
+                        <ol>
+                            <article class="post">
+                                <h4>
+                                    <a th:href="@{'posted_survey?id=' + ${survey.surveyId}}"> 
+                                        <p th:text="${survey.title}" /> 
+                                    </a>
+                                </h4>
+                                <p> submitted by
+                                    <a th:href="'/profile?author=' + ${survey.author}">
+                                        <span th:text="${survey.author}" />
+                                    </a>   
+                                </p>
+                                <div class="media">
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p th:text="${survey.text}" class="article-subtitle" />     
+                                            <img class="image" th:src="${survey.picture.id}" /> 
+                                            <form action="#" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
+                                                <div class="control">
+                                                    <span th:each="choice: ${survey.choices}">
+                                                        <label class="radio">
+                                                            <input type="radio" th:name="${choiceForm.choiceOne}" th:field="${choiceForm.choiceOne}" th:value= "${choice.name}" th:text="${' ' + choice.name}" />
+                                                            <span th:text="': ' +  ${choice.votes}" />  
+                                                        </label>
+                                                    </span>
+                                                </div>
+                                                <input class="button" type="submit" value="Vote"/>
+                                            </form> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <article class="post">
+                                <h4>
+                                    Proof
+                                </h4>
+                                <div class="media">
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <img th:if="${survey.proof != null}" th:src="${survey.proof.picture.id}" />
+                                            <div th:unless="${user.username == survey.author or survey.proof == null or voted == true}">
+                                                <form action="#" th:action="@{'proof/post_vote/' + ${survey.surveyId}}" th:object="${satisfiedForm}" method="post">
+                                                    <input type="radio" th:name="${satisfiedForm.satisfaction}" th:field="${satisfiedForm.satisfaction}" value= "satisfied" th:text="satisfied" />
+                                                    <input type="radio" th:name="${satisfiedForm.satisfaction}"  th:field="${satisfiedForm.satisfaction}" value= "unsatisfied" th:text="unsatisfied" />
+                                                    <input th:if="${user.username != null}" type="submit" value="Vote"/>
+                                                </form> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </ol>
+                    </div>
+                </div>
             </div>
-            <img th:if="${survey.proof != null}" th:src="${survey.proof.picture.id}" />
-            <div th:unless="${user.username == survey.author or survey.proof == null or voted == true}">
-                <form action="#" th:action="@{'proof/post_vote/' + ${survey.surveyId}}" th:object="${satisfiedForm}" method="post">
-                    <input type="radio" th:name="${satisfiedForm.satisfaction}" th:field="${satisfiedForm.satisfaction}" value= "satisfied" th:text="satisfied" />
-                    <input type="radio" th:name="${satisfiedForm.satisfaction}"  th:field="${satisfiedForm.satisfaction}" value= "unsatisfied" th:text="unsatisfied" />
-                    <input th:if="${user.username != null}" type="submit" value="Vote"/>
-                </form> 
+            <section class="hero">
+                <div class="hero-body">
+                    <div class="container has-text-centered">
+                        <h1 class="title">
+                            Comments
+                        </h1>
+                    </div>
+                </div>
+            </section>
+            <div class='columns'>
+                <div class='column is-8 is-offset-2'>
+                    <form action="#" th:action="@{'survey/post_comment/' + ${survey.surveyId}}" th:object="${commentForm}" method="post">  
+                        <div class='field'>
+                            <div class='control'>
+                                <textarea id='comment-field' class='textarea' th:field="*{text}" placeholder='Enter your comment...' />
+                            </div>
+                            <br />
+                            <div class='control has-text-right'>
+                                <a id='clear-button' class='button'> Clear </a>
+                                <input class='button is-primary' type='submit' value='Submit' />
+                            </div>
+                        </div>
+                    </form>
+                    <section class="hero">
+                    <div class="hero-body">
+                        <div class="container has-text-centered">
+                            <h1 class="title">
+                            </h1>
+                        </div>
+                    </div>
+                </section>
+                    <div class="box content">
+                        <ol>
+                            <li th:each="comment: ${survey.comments}">
+                                <article class="post">
+                                    <div class="media">
+                                        <div class="media-content">
+                                            <a th:href="@{'/profile?author=' + *{comment.username}}">
+                                                <p th:text="*{comment.username}" />
+                                            </a>
+                                            <p th:text="*{comment.text}" />
+                                        </div>
+                                    </div>
+                                </article>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
             </div>
-            <div th:if="${numSatisfied != null}">
-                <p th:text="'Satisfied: ' + ${numSatisfied}" />
-                <p th:text="'Disatisfied: ' + ${numDisatisfied}" />
-            </div>
-            <h2> Comments </h2>
-            <form action="#" th:action="@{'survey/post_comment/' + ${survey.surveyId}}" th:object="${commentForm}" method="post">    
-                <textarea th:field="*{text}" rows="10" cols="50"></textarea>
-                <input type='submit' value='Submit' />
-            </form>
-            <li th:each="comment: ${survey.comments}">
-                <a th:href="{'/profile?author=' + *{comment.username}}">
-                    <p th:text="*{comment.username}" />
-                </a>
-                <p th:text="*{comment.text}" />
-                <br></br>
-            </li>
+
         </div>
         <div th:replace="fragments/footer :: footer">... </div>
     </body>
-    
+    <script>
+        $(document).ready(function () {
+
+            $('#file').on("change", function(){ 
+                $('#file-name').text($('#file').val()) 
+            });
+
+            $('#clear-button').click(function(){
+                $('#comment-field').val('');
+            });
+
+        });
+    </script>
 </html>
