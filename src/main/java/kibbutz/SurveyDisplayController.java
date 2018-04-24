@@ -8,6 +8,8 @@ package kibbutz;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import kibbutz.model.entity.Comment;
 import kibbutz.model.entity.ProofPicture;
@@ -60,18 +62,24 @@ public class SurveyDisplayController {
         Survey theSurvey = surveyRepo.findOne(id);
         User theUser = userRepo.findUserByUsername(user.getUsername());
         
+        boolean voted = theSurvey.getAuthor().equalsIgnoreCase(user.getUsername());
+        Survey tempSurvey = null;
+        if(!voted){
+            tempSurvey = theUser.getVotingHistory().stream().filter(survey -> survey.getSurveyId().equals(id)).findFirst().orElse(null);
+            voted = tempSurvey != null;
+        }
+        
         model.addAttribute("proofForm", new ProofForm());
         model.addAttribute("satisfiedForm", new SatisfiedForm());
         model.addAttribute("survey", theSurvey);
         model.addAttribute("commentForm", new CommentForm());
         model.addAttribute("choiceForm", new ChoiceForm());
+        model.addAttribute("voted", voted);
+      
         
         if(theSurvey.getProof() != null){
             model.addAttribute("numSatisfied", theSurvey.getProof().getNumSatisfied());
             model.addAttribute("numDisatisfied", theSurvey.getProof().getNumDisatisfied());
-            Survey temp = theUser.getSurveysReviewed().stream().filter(aSurvey -> aSurvey.getSurveyId().equals(id))
-            .findFirst().orElse(null);
-            model.addAttribute("voted", temp != null);
         }
         
         return "survey-detail";

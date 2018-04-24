@@ -82,6 +82,7 @@ public class User {
         this.first = signUpForm.getFirst();
         this.last = signUpForm.getLast();
         this.email = signUpForm.getEmail();
+        this.karmaScore = 0;
     }
 
     /**

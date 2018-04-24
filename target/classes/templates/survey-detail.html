@@ -90,7 +90,7 @@
                                                         </label>
                                                     </span>
                                                 </div>
-                                                <input class="button" type="submit" value="Vote"/>
+                                                <input class="button" type="submit" th:unless="${voted == true}" value="Vote"/>
                                             </form> 
                                         </div>
                                     </div>

@@ -11,6 +11,7 @@ import kibbutz.model.entity.User;
 import kibbutz.model.form.LoginForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,8 +40,8 @@ public class LoginController {
     
          
     @PostMapping("/login")
-    public RedirectView login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult, 
-            SessionStatus status, RedirectAttributes attributes) {
+    public ModelAndView login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult, 
+            SessionStatus status, ModelMap model) {
         
         User someUser = userRepo.findUserByUsername(loginForm.getUsername());
         
@@ -48,11 +49,11 @@ public class LoginController {
         
         if(bindingResult.hasErrors() || !validLogin){
             status.setComplete();
-            attributes.addFlashAttribute("status", "Incorrect Login Credentials!");
-            return new RedirectView("/");
+            model.addAttribute("status", "Incorrect Login Credentials!");
+            return new ModelAndView("redirect:/", model);
         }
-        attributes.addFlashAttribute("user", someUser);
-        return new RedirectView("/");
+        model.addAttribute("user", someUser);
+        return new ModelAndView("redirect:/", model);
         
     }
    

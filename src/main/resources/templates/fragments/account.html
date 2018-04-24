@@ -7,11 +7,11 @@
                 </header>
                 <div class="card-content">
                     <div class="content">
-                        Karma: 
+                        <span th:text="'Karma: ' + *{karmaScore}" />
                         <p>
-                            <a id='followers'> Followers: </a>
+                            <a id='followers' th:text="'Followers: ' + ${#lists.size(followers)}" />
                             <br></br>
-                            <a id='following'> Following: </a>
+                            <a id='following' th:text="'Following: ' + ${#lists.size(following)}" />
                         </p>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                                                     </label>
                                                 </span>
                                             </div>
-                                            <input class="button" type="submit" value="Vote"/>
+                                            <input th:unless="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.author}" class="button" type="submit" value="Vote"/>                               
                                         </form> 
                                     </div>
                                 </div>
@@ -76,53 +76,155 @@
         </div>
     </div>
 
+
+
     <div id="voting-modal" class="modal">
         <div class="modal-background"></div>
-        <div class="modal-content">
-            <p> Voting </p>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Voting</p>
+                <button id='voting-close' class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="box content">
+                    <ol th:unless="${#lists.size(history) == 0}">
+                        <li th:each="survey : ${history}">
+                            <article class="post">
+                                <div class="media">
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <a th:href="@{'posted_survey?id=' + ${survey.surveyId}}"> 
+                                                <p class="article-subtitle" th:text="${survey.title}" /> 
+                                            </a>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </li>
+                    </ol>
+                    <article class="post" th:if="${#lists.size(history) == 0}">
+                        <div class="media">
+                            <div class="media-content">
+                                <div class="content">
+                                    No voting history.
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+            </footer>
         </div>
-        <button id='voting-close' class="modal-close is-large" aria-label="close"></button>
     </div>
     <div id="followers-modal" class="modal">
         <div class="modal-background"></div>
-        <div class="modal-content">
-            <p> Followers </p>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Followers</p>
+                <button id='followers-close' class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="box content">
+                    <ol th:unless="${#lists.size(followers)== 0}">
+                        <li th:each="user : ${followers}">
+                            <article class="post">
+                                <div class="media">
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <a th:href="'/profile?author=' + ${user}">
+                                                <span class="article-subtitle" th:text="${user}" />
+                                            </a>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </li>
+                    </ol>
+                    <article class="post" th:if="${#lists.size(followers) == 0}">
+                        <div class="media">
+                            <div class="media-content">
+                                <div class="content">
+                                    No followers.
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+            </footer>
         </div>
-        <button id='followers-close' class= "modal-close is-large" aria-label="close"></button>
     </div>
     <div id="following-modal" class="modal">
         <div class="modal-background"></div>
-        <div class="modal-content">
-            <p> Following </p>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Following</p>
+                <button id='following-close' class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="box content">
+                    <ol th:unless="${#lists.size(following) == 0}">
+                        <li th:each="user : ${following}">
+                            <article class="post">
+                                <div class="media">
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <a th:href="@{'/profile?author=' + ${user}}">
+                                                <span class="article-subtitle" th:text="${user}" />
+                                            </a>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </li>
+                    </ol>
+                    <article class="post" th:if="${#lists.size(following) == 0}">
+                        <div class="media">
+                            <div class="media-content">
+                                <div class="content">
+                                    Not following anyone.
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+            </footer>
         </div>
-        <button id='following-close' class="modal-close is-large" aria-label="close"></button>
     </div>
     <script>
         $(document).ready(function () {
 
-            $('#voting').click(function () {
-                $('#voting-modal').addClass('is-active');
-            });
-            $('#voting-close').click(function () {
-                $('#voting-modal').removeClass('is-active');
-            });
-            
-            $('#followers').click(function () {
-                $('#followers-modal').addClass('is-active');
-            });
-            $('#followers-close').click(function () {
-                $('#followers-modal').removeClass('is-active');
-            });  
-            
-            $('#following').click(function () {
-                $('#following-modal').addClass('is-active');
-            });
-            $('#following-close').click(function () {
-                $('#following-modal').removeClass('is-active');
-            });
-            
-            
+        $('#voting').click(function () {
+        $('#voting-modal').addClass('is-active');
+        });
+        $('#voting-close').click(function () {
+        $('#voting-modal').removeClass('is-active');
+        });
+
+        $('#followers').click(function () {
+        $('#followers-modal').addClass('is-active');
+        });
+        $('#followers-close').click(function () {
+        $('#followers-modal').removeClass('is-active');
+        });  
+
+        $('#following').click(function () {
+        $('#following-modal').addClass('is-active');
+        });
+        $('#following-close').click(function () {
+        $('#following-modal').removeClass('is-active');
+        });
+
+        $('.modal-background').click(function () {
+        $('#voting-modal').removeClass('is-active');
+        $('#following-modal').removeClass('is-active');
+        $('#followers-modal').removeClass('is-active');
+        });
+
         });
     </script>
 </div>
-

@@ -6,6 +6,9 @@
 package kibbutz;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import kibbutz.model.entity.Survey;
 import kibbutz.model.entity.User;
 import kibbutz.model.form.ChoiceForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -33,58 +37,47 @@ public class UserController {
     private SurveyRepository surveyRepo;
     
     @GetMapping("/user")
-    public String userInfo(@SessionAttribute("user") User user, Model model) {
+    public RedirectView userInfo(@SessionAttribute("user") User user) {
+        
+        return new RedirectView("/profile?author=" + user.getUsername());
+    }
+    
+    @GetMapping("/profile")
+    public String userProfile(@RequestParam("author") String author, ModelMap model, @SessionAttribute("user") User user) {
         
         ArrayList<String> following = new ArrayList();
         ArrayList<String> followers = new ArrayList();
         
+        User viewedUser = userRepo.findUserByUsername(author);
         User theUser = userRepo.findUserByUsername(user.getUsername());
+        
+        Boolean isFollowing = author.equals(user.getUsername());
         
         model.addAttribute("posted", theUser.getSurveys());
         
-        theUser.getFollowing().forEach((aUser) -> {
+        viewedUser.getFollowing().forEach((aUser) -> {
             following.add(aUser.getUsername());
         });        
         
-        theUser.getFollowers().forEach((aUser) -> {
+        viewedUser.getFollowers().forEach((aUser) -> {
             followers.add(aUser.getUsername());
         });
         
-        model.addAttribute("history", theUser.getVotingHistory());
-        model.addAttribute("account", theUser);
+        if(!isFollowing){
+            isFollowing = followers.stream().anyMatch(username -> username.equalsIgnoreCase(author));
+        }
+        
+        List<Long> allVoted = theUser.getVotingHistory().stream().filter(survey -> survey.getAuthor().equalsIgnoreCase(author)).map(survey -> survey.getSurveyId()).collect(Collectors.toList());
+        
+        model.addAttribute("allActiveVoted", allVoted);
+        model.addAttribute("history", viewedUser.getVotingHistory());
+        model.addAttribute("posted", viewedUser.getSurveys());
+        model.addAttribute("account", viewedUser);
         model.addAttribute("followers", followers);
         model.addAttribute("choiceForm", new ChoiceForm());
         model.addAttribute("following", following);
-        return "user-detail";
-    }
-    
-    @GetMapping("/profile")
-    public ModelAndView userProfile(@RequestParam("author") String author, ModelMap model, @SessionAttribute("user") User user) {
-        
-        user = userRepo.findUserByUsername(user.getUsername());
-        
-        User theUser = user.getFollowing().stream().filter(aUser -> aUser.getUsername().equals(author))
-            .findFirst().orElse(null);
-        
-        boolean isFollowing = theUser != null;
-        
-        if(user.getUsername().equalsIgnoreCase(author)){
-            return new ModelAndView("redirect:/user");
-        }
-        
-        User temp = userRepo.findUserByUsername(author);
-        
-        if(temp == null){
-            return new ModelAndView("redirect:/");
-        }
-        
-        model.addAttribute("history", temp.getVotingHistory());
-        model.addAttribute("posted", temp.getSurveys());
-        model.addAttribute("choiceForm", new ChoiceForm());
         model.addAttribute("isFollowing", isFollowing);
-        model.addAttribute("user", user);
-        model.addAttribute("account", userRepo.findUserByUsername(author));
-        return new ModelAndView("user-detail", model);
+        return "user-detail";
     }
     
 }

@@ -44,16 +44,18 @@ public class VoteController {
         
         System.out.println(choice.getChoiceOne());
                 
-        if(choice.getChoiceOne().equals(theSurvey.getChoices().get(0).getName())){
-            theSurvey.getChoices().get(0).incrementVote();
-        } else {
-            theSurvey.getChoices().get(1).incrementVote();
+        if(!theSurvey.getAuthor().equalsIgnoreCase(theUser.getUsername())){
+            if(choice.getChoiceOne().equals(theSurvey.getChoices().get(0).getName())){
+                theSurvey.getChoices().get(0).incrementVote();
+            } else {
+                theSurvey.getChoices().get(1).incrementVote();
+            }
+            
+            theUser.getVotingHistory().add(theSurvey);
+            userRepo.save(theUser);
+            surveyRepo.save(theSurvey);
         }
-        
-        theUser.getVotingHistory().add(theSurvey);
-        
-        userRepo.save(theUser);
-        surveyRepo.save(theSurvey);
+     
         return new RedirectView("/");
     }
 }

@@ -40,8 +40,6 @@ public class Survey {
     private Date terminationTime;
     private String text;
     private String title;
-    private int upVotes;
-    private int downVotes;
     private String author;
     private boolean active;
     
@@ -152,34 +150,6 @@ public class Survey {
      */
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    /**
-     * @return the upVotes
-     */
-    public int getUpVotes() {
-        return upVotes;
-    }
-
-    /**
-     * @param upVotes the upVotes to set
-     */
-    public void setUpVotes(int upVotes) {
-        this.upVotes = upVotes;
-    }
-
-    /**
-     * @return the downVotes
-     */
-    public int getDownVotes() {
-        return downVotes;
-    }
-
-    /**
-     * @param downVotes the downVotes to set
-     */
-    public void setDownVotes(int downVotes) {
-        this.downVotes = downVotes;
     }
 
     /**

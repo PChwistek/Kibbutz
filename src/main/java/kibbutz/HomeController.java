@@ -8,19 +8,17 @@ package kibbutz;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import kibbutz.model.entity.Survey;
 import kibbutz.model.entity.SurveyPicture;
+import kibbutz.model.entity.User;
 import kibbutz.model.form.LoginForm;
 import kibbutz.model.form.ChoiceForm;
-import kibbutz.model.entity.User;
 import kibbutz.model.form.SignUpForm;
 import org.h2.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -28,7 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
@@ -46,16 +44,26 @@ public class HomeController {
     private SurveyRepository surveyRepo;
     
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(ModelMap model) {
         
-        if(!model.containsAttribute("user")){
+        User theUser;
+        
+        if(model.get("user") == null){
             model.addAttribute("loginForm", new LoginForm());
             model.addAttribute("signUpForm", new SignUpForm());
             return "index"; 
-        }
+        } 
         
+        User tempUser = (User)model.get("user");
+        theUser = userRepo.findUserByUsername(tempUser.getUsername());
+        
+        System.out.println(theUser.getUsername());
         List<Survey> allActive = surveyRepo.findAllActive();
+        List<Long> allActiveVoted = theUser.getVotingHistory().stream().filter(survey -> survey.isActive()).map(survey -> survey.getSurveyId()).collect(Collectors.toList());
+        
         model.addAttribute("surveys", allActive);
+        model.addAttribute("allActiveVoted", allActiveVoted);
+        model.addAttribute("user", theUser);
         model.addAttribute("choiceForm", new ChoiceForm());
 
         return "index-signed-in";
