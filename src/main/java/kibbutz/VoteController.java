@@ -51,6 +51,7 @@ public class VoteController {
                 theSurvey.getChoices().get(1).incrementVote();
             }
             
+            theSurvey.incrementKarma();
             theUser.getVotingHistory().add(theSurvey);
             userRepo.save(theUser);
             surveyRepo.save(theSurvey);

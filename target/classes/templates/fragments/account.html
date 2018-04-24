@@ -55,7 +55,7 @@
                                     <div class="content">
                                         <p th:text="${survey.text}" class="article-subtitle" />     
                                         <img class="image" th:src="${survey.picture.id}" /> 
-                                        <form action="#" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
+                                        <form action="#" th:unless="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.author}" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
                                             <div class="control">
                                                 <span th:each="choice: ${survey.choices}">
                                                     <label class="radio">
@@ -64,8 +64,14 @@
                                                     </label>
                                                 </span>
                                             </div>
-                                            <input th:unless="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.author}" class="button" type="submit" value="Vote"/>                               
+                                            <input class="button" type="submit" value="Vote"/>                               
                                         </form> 
+                                        <div th:if="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.author}">
+                                             <span th:each="choice: ${survey.choices}">
+                                                <span th:text="${' ' + choice.name}" />
+                                                <span th:text="': ' +  ${choice.votes}" /> 
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +100,7 @@
                                     <div class="media-content">
                                         <div class="content">
                                             <a th:href="@{'posted_survey?id=' + ${survey.surveyId}}"> 
-                                                <p class="article-subtitle" th:text="${survey.title}" /> 
+                                                <span class="" th:text="${survey.title}" /> 
                                             </a>    
                                         </div>
                                     </div>
@@ -133,7 +139,7 @@
                                     <div class="media-content">
                                         <div class="content">
                                             <a th:href="'/profile?author=' + ${user}">
-                                                <span class="article-subtitle" th:text="${user}" />
+                                                <span class="" th:text="${user}" />
                                             </a>    
                                         </div>
                                     </div>
@@ -172,7 +178,7 @@
                                     <div class="media-content">
                                         <div class="content">
                                             <a th:href="@{'/profile?author=' + ${user}}">
-                                                <span class="article-subtitle" th:text="${user}" />
+                                                <span class="" th:text="${user}" />
                                             </a>    
                                         </div>
                                     </div>

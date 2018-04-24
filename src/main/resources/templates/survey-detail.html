@@ -13,7 +13,7 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-2">
-                    <div class="card" th:if= "${user.username == survey.author and survey.proof == null}">
+                    <div class="card" th:if= "${user.username == survey.author and survey.proof == null and isActive == false}">
                         <header class="card-header">
                             <p class="card-header-title"> Post Proof </p>
                         </header>
@@ -47,14 +47,24 @@
                             </form>
                         </div>
                     </div>
+                    <div class="card" th:if= "${survey.proof == null and isActive == true}">
+                        <header class="card-header">
+                            <p class="card-header-title"> The community still has time to make a decision! </p>
+                        </header>
+                    </div>
+                      <div class="card" th:unless= "${isActive == true or user.username == survey.author or survey.proof != null}">
+                        <header class="card-header">
+                            <p class="card-header-title"> Poster must post proof!</p>
+                        </header>
+                    </div>
                     <div class="card" th:unless= "${survey.proof == null}">
                         <header class="card-header">
-                            <p class="card-header-title"> Karma </p>
+                            <p class="card-header-title"> Karma</p>
                         </header>
                         <div class="card-content">
                             <div th:if="${numSatisfied != null}">
-                                <p> Potential: </p>
-                                <p> Score: </p>
+                                <p> Potential: <span th:text="${survey.karmaPotential}" /></p>
+                                <p> Current Score: <span th:text="${numSatisfied - numDisatisfied}" /></p>
                                 <p th:text="'Satisfied: ' + ${numSatisfied}" />
                                 <p th:text="'Disatisfied: ' + ${numDisatisfied}" />
                             </div>
@@ -81,7 +91,7 @@
                                         <div class="content">
                                             <p th:text="${survey.text}" class="article-subtitle" />     
                                             <img class="image" th:src="${survey.picture.id}" /> 
-                                            <form action="#" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
+                                            <form action="#" th:unless="${voted == true}" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
                                                 <div class="control">
                                                     <span th:each="choice: ${survey.choices}">
                                                         <label class="radio">
@@ -90,13 +100,20 @@
                                                         </label>
                                                     </span>
                                                 </div>
-                                                <input class="button" type="submit" th:unless="${voted == true}" value="Vote"/>
+                                                <input class="button" type="submit" value="Vote"/>
                                             </form> 
                                         </div>
+                                        <div th:if="${user.username == survey.author or survey.proof == null or voted == false or proofReviewed == true}">
+                                            <br></br>
+                                            <span th:each="choice: ${survey.choices}">
+                                                <span th:text="${' ' + choice.name}" />
+                                                <span th:text="': ' +  ${choice.votes}" /> 
+                                            </span>
+                                         </div>
                                     </div>
                                 </div>
                             </article>
-                            <article class="post">
+                            <article th:if="${survey.proof != null}" class="post">
                                 <h4>
                                     Proof
                                 </h4>
@@ -104,13 +121,14 @@
                                     <div class="media-content">
                                         <div class="content">
                                             <img th:if="${survey.proof != null}" th:src="${survey.proof.picture.id}" />
-                                            <div th:unless="${user.username == survey.author or survey.proof == null or voted == true}">
+                                            <p th:if="${survey.proof != null}" th:text="${survey.proof.comment}"/>
+                                            <div th:unless="${user.username == survey.author or survey.proof == null or voted == false or proofReviewed == true}">
                                                 <form action="#" th:action="@{'proof/post_vote/' + ${survey.surveyId}}" th:object="${satisfiedForm}" method="post">
                                                     <input type="radio" th:name="${satisfiedForm.satisfaction}" th:field="${satisfiedForm.satisfaction}" value= "satisfied" th:text="satisfied" />
                                                     <input type="radio" th:name="${satisfiedForm.satisfaction}"  th:field="${satisfiedForm.satisfaction}" value= "unsatisfied" th:text="unsatisfied" />
-                                                    <input th:if="${user.username != null}" type="submit" value="Vote"/>
+                                                    <input type="submit" value="Vote"/>
                                                 </form> 
-                                            </div>
+                                            </div>                                         
                                         </div>
                                     </div>
                                 </div>
@@ -150,7 +168,7 @@
                         </div>
                     </div>
                 </section>
-                    <div class="box content">
+                    <div class="box content" th:unless="${#lists.size(survey.comments) == 0}">
                         <ol>
                             <li th:each="comment: ${survey.comments}">
                                 <article class="post">

@@ -42,6 +42,7 @@ public class Survey {
     private String title;
     private String author;
     private boolean active;
+    private int karmaPotential = 0;
     
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -79,6 +80,10 @@ public class Survey {
         this.choices.add(new Choice(surveyForm.getChoiceOne()));
         this.choices.add(new Choice(surveyForm.getChoiceTwo()));
         //this.postPic = surveyForm.getPostPic();
+    }
+    
+    public void incrementKarma(){
+        this.karmaPotential++;
     }
 
     /**
@@ -234,6 +239,20 @@ public class Survey {
      */
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    /**
+     * @return the karmaPotential
+     */
+    public int getKarmaPotential() {
+        return karmaPotential;
+    }
+
+    /**
+     * @param karmaPotential the karmaPotential to set
+     */
+    public void setKarmaPotential(int karmaPotential) {
+        this.karmaPotential = karmaPotential;
     }
   
     

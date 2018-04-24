@@ -63,6 +63,7 @@ public class SurveyDisplayController {
         User theUser = userRepo.findUserByUsername(user.getUsername());
         
         boolean voted = theSurvey.getAuthor().equalsIgnoreCase(user.getUsername());
+        boolean proofReviewed = voted;
         Survey tempSurvey = null;
         if(!voted){
             tempSurvey = theUser.getVotingHistory().stream().filter(survey -> survey.getSurveyId().equals(id)).findFirst().orElse(null);
@@ -75,11 +76,18 @@ public class SurveyDisplayController {
         model.addAttribute("commentForm", new CommentForm());
         model.addAttribute("choiceForm", new ChoiceForm());
         model.addAttribute("voted", voted);
+        model.addAttribute("isActive", theSurvey.isActive());
       
         
         if(theSurvey.getProof() != null){
+            
             model.addAttribute("numSatisfied", theSurvey.getProof().getNumSatisfied());
             model.addAttribute("numDisatisfied", theSurvey.getProof().getNumDisatisfied());
+            if(!proofReviewed){
+                proofReviewed = theUser.getSurveysReviewed().stream().anyMatch(survey -> survey.getSurveyId().equals(id));
+            }
+            model.addAttribute("proofReviewed", proofReviewed);
+
         }
         
         return "survey-detail";

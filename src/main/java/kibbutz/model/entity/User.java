@@ -42,7 +42,7 @@ public class User {
     private String password;    //hashed
     private String email;
   //  private Boolean emailConfirmed;
-    private long karmaScore;
+    private int karmaScore;
     
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -172,14 +172,14 @@ public class User {
     /**
      * @return the karmaScore
      */
-    public long getKarmaScore() {
+    public int getKarmaScore() {
         return karmaScore;
     }
 
     /**
      * @param karmaScore the karmaScore to set
      */
-    public void setKarmaScore(long karmaScore) {
+    public void setKarmaScore(int karmaScore) {
         this.karmaScore = karmaScore;
     }
 

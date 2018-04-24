@@ -23,7 +23,6 @@ public class Proof {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long proofId;    
-    private double karma;
     private int numSatisfied = 0;
     private int numDisatisfied = 0;
     private String comment;
@@ -46,7 +45,7 @@ public class Proof {
     }
     
     public void incrementNumDisatisfied(){
-        this.setNumDisatisfied(this.getNumDisatisfied() - 1);
+        this.setNumDisatisfied(this.getNumDisatisfied() + 1);
     }
 
     /**
@@ -61,20 +60,6 @@ public class Proof {
      */
     public void setProofId(Long proofId) {
         this.proofId = proofId;
-    }
-
-    /**
-     * @return the karma
-     */
-    public double getKarma() {
-        return karma;
-    }
-
-    /**
-     * @param karma the karma to set
-     */
-    public void setKarma(double karma) {
-        this.karma = karma;
     }
 
     /**

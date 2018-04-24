@@ -68,13 +68,17 @@ public class ProofController {
             @ModelAttribute("satisfiedForm") SatisfiedForm satisfiedForm, @SessionAttribute("user") User user){
             
         Survey theSurvey = surveyRepo.findOne(surveyId);
+        User viewedUser = userRepo.findUserByUsername(theSurvey.getAuthor());
+        
 
         String level = satisfiedForm.getSatisfaction();
 
         if(level.equals("satisfied")){
             theSurvey.getProof().incrementNumSatisfied();
+            viewedUser.setKarmaScore(viewedUser.getKarmaScore() + 1);
         } else {
-            theSurvey.getProof().incrementNumSatisfied();
+            theSurvey.getProof().incrementNumDisatisfied();
+            viewedUser.setKarmaScore(viewedUser.getKarmaScore() - 1);
         }
 
             

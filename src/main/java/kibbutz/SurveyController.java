@@ -53,7 +53,7 @@ public class SurveyController {
         
         Calendar cal = Calendar.getInstance(); // creates calendar
         theSurvey.setCreationTime(new Date());
-        cal.add(Calendar.HOUR, 1); // 1 hour
+        cal.add(Calendar.MINUTE, 1); // 2 minutes
         theSurvey.setTerminationTime(cal.getTime()); // returns new date object, one hour in the future
         theSurvey.setActive(true);
         SurveyPicture thePicture = new SurveyPicture(file);
