@@ -8,6 +8,7 @@ package kibbutz;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import kibbutz.model.entity.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -34,10 +35,16 @@ public class ScheduledController {
         cal.setTime(new Date()); // sets calendar time/date  
         
         for(Survey survey: theActiveSurveys){
-     
+                        
             if(cal.getTime().after(survey.getTerminationTime())){
                 System.out.println("Out of time");
                 survey.setActive(false);
+                surveyRepo.save(survey);
+            } else {
+                long diff = survey.getTerminationTime().getTime() - cal.getTime().getTime();
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
+                survey.setMinutesLeft( (int) minutes);
+                System.out.print("Time left: " + minutes);
                 surveyRepo.save(survey);
             }
         }

@@ -25,7 +25,13 @@ public class SurveyForm {
     private String choiceOne;
     @NotNull @Size(min=1, max=100)
     private String choiceTwo;
-    private Date terminationDate;
+    @Size(max=100)
+    private String choiceThree;
+    @Size(max=100)
+    private String choiceFour;
+    @NotNull
+    private int minutes;
+    private boolean canSuggest = false;
     
     /**
      * @return the text
@@ -100,15 +106,57 @@ public class SurveyForm {
     /**
      * @return the terminationDate
      */
-    public Date getTerminationDate() {
-        return terminationDate;
+    public int getMinutes() {
+        return minutes;
     }
 
     /**
      * @param terminationDate the terminationDate to set
      */
-    public void setTerminationDate(Date terminationDate) {
-        this.terminationDate = terminationDate;
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    /**
+     * @return the choiceThree
+     */
+    public String getChoiceThree() {
+        return choiceThree;
+    }
+
+    /**
+     * @param choiceThree the choiceThree to set
+     */
+    public void setChoiceThree(String choiceThree) {
+        this.choiceThree = choiceThree;
+    }
+
+    /**
+     * @return the choiceFour
+     */
+    public String getChoiceFour() {
+        return choiceFour;
+    }
+
+    /**
+     * @param choiceFour the choiceFour to set
+     */
+    public void setChoiceFour(String choiceFour) {
+        this.choiceFour = choiceFour;
+    }
+
+    /**
+     * @return the canSuggest
+     */
+    public boolean isCanSuggest() {
+        return canSuggest;
+    }
+
+    /**
+     * @param canSuggest the canSuggest to set
+     */
+    public void setCanSuggest(boolean canSuggest) {
+        this.canSuggest = canSuggest;
     }
     
 }

@@ -44,6 +44,15 @@
                                 <a th:href="@{'posted_survey?id=' + ${survey.surveyId}}"> 
                                     <p th:text="${survey.title}" /> 
                                 </a>
+                                      <div class="has-text-right" th:if="${survey.active == true}">
+                                        <span th:if="${survey.canSuggest == true}" th:onclick="'setUpClick(\'' + ${survey.surveyId} + '\');'"  class="has-text-grey-light is-right suggestion-icon"><i class="fas fa-pencil-alt"></i></span>
+                                        <span th:if="${survey.minutesLeft &lt; 2}" class="has-text-grey-light is-right">
+                                            <i class="fas fa-hourglass-end is-danger"></i>
+                                        </span>
+                                </div>
+                                <div class="has-text-right" th:if="${survey.active == false}">
+                                      <span class="has-text-grey-light is-right"><i class="far fa-hourglass"></i></span>
+                                </div>
                             </h4>
                             <p> submitted by
                                 <a th:href="'/profile?author=' + ${survey.author}">
@@ -75,6 +84,8 @@
                                     </div>
                                 </div>
                             </div>
+                                <div th:replace="fragments/post-modal :: post-modal"> ... </div>
+
                         </article>
                     </li>
                 </ol>
@@ -232,5 +243,15 @@
         });
 
         });
+        
+    function setUpClick(surveyId){
+        $('#postmodal' + surveyId).addClass('is-active');
+    }
+    
+    function closeModal(surveyId){
+        $('#postmodal' + surveyId).removeClass('is-active');
+    }
+    
+        
     </script>
 </div>

@@ -2,66 +2,82 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Kibbutz - Make Poor Decisions Together!</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" type="text/css" th:href="@{/css/bulma.min.css}"/>
-        <link rel="stylesheet" type="text/css" th:href="@{/css/homepage.css}"/>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous" />
-    </head>
-    <body>
+            <link rel="icon" th:href="@{/img/favicon.ico}" />
+
         <div th:replace="fragments/header :: header">... </div>
-        <div class="container">
-            <div class="columns">
-                <div class="column is-8 is-offset-2">
-                    <div class="box content">
-                        <div th:if="${#lists.size(surveys) == 0}" class="has-text-centered">
-                            <p> No posts to show... </p>
-                        </div>
-                        <ol>
-                            <li th:each="survey : ${surveys}">
-                                <article class="post">
-                                    <h4>
-                                        <a th:href="@{'posted_survey?id=' + ${survey.surveyId}}"> 
-                                            <p th:text="${survey.title}" /> 
-                                        </a>
-                                    </h4>
-                                    <p> submitted by
-                                        <a th:href="'/profile?author=' + ${survey.author}">
-                                            <span th:text="${survey.author}" />
-                                        </a>   
-                                    </p>
-                                    <div class="media">
-                                        <div class="media-content">
-                                            <div class="content">
-                                                <p th:text="${survey.text}" class="article-subtitle" />     
-                                                <img class="image" th:src="${survey.picture.id}" /> 
-                                                <form action="#" th:unless="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.author}" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
-                                                    <div class="control">
-                                                        <span th:each="choice: ${survey.choices}">
-                                                            <label class="radio">
-                                                                <input type="radio" th:name="${choiceForm.choiceOne}" th:field="${choiceForm.choiceOne}" th:value= "${choice.name}" th:text="${' ' + choice.name}" />
-                                                                <span th:text="': ' +  ${choice.votes}" />  
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                    <input class="button" type="submit" value="Vote"/>
-                                                </form> 
-                                                <div th:if="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.author}">
-                                                    <br></br>
+    </head>
+<body>
+    <div th:replace="fragments/navbar :: navbar">... </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-8 is-offset-2">
+                <div class="box content">
+                    <div th:if="${#lists.size(surveys) == 0}" class="has-text-centered">
+                        <p> No posts to show... </p>
+                    </div>
+                    <ol>
+                        <li th:each="survey : ${surveys}">
+                            <article class="post">
+                                <h4>
+                                    <a th:href="@{'posted_survey?id=' + ${survey.surveyId}}"> 
+                                        <p th:text="${survey.title}" />  
+                                    </a> 
+                                    <div class="has-text-right">
+                                        <span th:if="${survey.canSuggest == true}" th:onclick="'setUpClick(\'' + ${survey.surveyId} + '\');'" class="suggestion-icon has-text-grey-light is-right"><i class="fas fa-pencil-alt"></i></span>
+                                        <span th:if="${survey.minutesLeft &lt; 2}" class="has-text-grey-light is-right">
+                                            <i class="fas fa-hourglass-end "></i>
+                                        </span>
+                                    </div>
+                                </h4>
+                                <p> submitted by
+                                    <a th:href="'/profile?author=' + ${survey.author}">
+                                        <span th:text="${survey.author}" />
+                                    </a>   
+                                </p>
+                                <div class="media">
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p th:text="${survey.text}" class="article-subtitle" />     
+                                            <img class="image" th:src="${survey.picture.id}" /> 
+                                            <form action="#" th:unless="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.author}" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
+                                                <div class="control">
                                                     <span th:each="choice: ${survey.choices}">
-                                                        <span th:text="${' ' + choice.name}" />
-                                                        <span th:text="': ' +  ${choice.votes}" /> 
+                                                        <label class="radio">
+                                                            <input type="radio" th:name="${choiceForm.choiceOne}" th:field="${choiceForm.choiceOne}" th:value= "${choice.name}" th:text="${' ' + choice.name}" />
+                                                            <span th:text="': ' +  ${choice.votes}" />  
+                                                        </label>
                                                     </span>
                                                 </div>
+                                                <input class="button" type="submit" value="Vote"/>
+                                            </form> 
+                                            <div th:if="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.author}">
+                                                <br></br>
+                                                <span th:each="choice: ${survey.choices}">
+                                                    <span th:text="${' ' + choice.name}" />
+                                                    <span th:text="': ' +  ${choice.votes}" /> 
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
-                                </article>
-                            </li>
-                        </ol>
-                    </div>
+                                </div>
+                                <div th:replace="fragments/post-modal :: post-modal">... </div>
+                            </article>
+                        </li>
+                    </ol>
                 </div>
             </div>
         </div>
-        <div th:replace="fragments/footer :: footer">... </div>
-    </body>
+    </div>
+    <div th:replace="fragments/footer :: footer">... </div>
+</body>
+<script>
+    function setUpClick(surveyId){
+        $('#postmodal' + surveyId).addClass('is-active');
+    }
+    
+    function closeModal(surveyId){
+        $('#postmodal' + surveyId).removeClass('is-active');
+    }
+    
+</script>
 </html>

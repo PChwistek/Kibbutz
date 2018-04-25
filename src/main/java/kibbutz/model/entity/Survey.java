@@ -42,31 +42,40 @@ public class Survey {
     private String title;
     private String author;
     private boolean active;
+    private int minutesLeft;
     private int karmaPotential = 0;
+    private boolean canSuggest;
     
     @OneToMany(
-            cascade = CascadeType.ALL,
+            cascade = {CascadeType.MERGE, CascadeType.REFRESH},
             orphanRemoval = true
     )
     @JoinColumn(name = "surveyId")
     private List<Choice> choices = new ArrayList();
     
     @OneToMany(
-            cascade = CascadeType.ALL,
+        cascade = {CascadeType.MERGE, CascadeType.REFRESH},
+        orphanRemoval = true
+    )
+    @JoinColumn(name = "surveyId")
+    private List<Choice> suggestedChoices = new ArrayList();
+    
+    @OneToMany(
+            cascade = {CascadeType.MERGE, CascadeType.REFRESH},
             orphanRemoval = true
     )
     @JoinColumn(name = "surveyId")
     private List<Comment> comments = new ArrayList();
     
     @OneToOne(
-        cascade = CascadeType.ALL,
+        cascade = {CascadeType.MERGE, CascadeType.REFRESH},
         orphanRemoval = true
     )
     @JoinColumn(name = "surveyId")
     private SurveyPicture picture;
     
     @OneToOne(
-        cascade = CascadeType.ALL,
+        cascade = {CascadeType.MERGE, CascadeType.REFRESH},
         orphanRemoval = true
     )
     @JoinColumn(name = "surveyId")
@@ -79,7 +88,16 @@ public class Survey {
         this.text = surveyForm.getText();
         this.choices.add(new Choice(surveyForm.getChoiceOne()));
         this.choices.add(new Choice(surveyForm.getChoiceTwo()));
-        //this.postPic = surveyForm.getPostPic();
+        
+        if(surveyForm.getChoiceThree() != null && !surveyForm.getChoiceThree().equals("")){
+            this.choices.add(new Choice(surveyForm.getChoiceThree()));
+        }
+        
+        if(surveyForm.getChoiceFour() != null && !surveyForm.getChoiceFour().equals("")){
+            this.choices.add(new Choice(surveyForm.getChoiceFour()));
+        }
+        this.canSuggest = surveyForm.isCanSuggest();
+        
     }
     
     public void incrementKarma(){
@@ -253,6 +271,48 @@ public class Survey {
      */
     public void setKarmaPotential(int karmaPotential) {
         this.karmaPotential = karmaPotential;
+    }
+
+    /**
+     * @return the canSuggest
+     */
+    public boolean isCanSuggest() {
+        return canSuggest;
+    }
+
+    /**
+     * @param canSuggest the canSuggest to set
+     */
+    public void setCanSuggest(boolean canSuggest) {
+        this.canSuggest = canSuggest;
+    }
+
+    /**
+     * @return the minutesLeft
+     */
+    public int getMinutesLeft() {
+        return minutesLeft;
+    }
+
+    /**
+     * @param minutesLeft the minutesLeft to set
+     */
+    public void setMinutesLeft(int minutesLeft) {
+        this.minutesLeft = minutesLeft;
+    }
+
+    /**
+     * @return the suggestedChoices
+     */
+    public List<Choice> getSuggestedChoices() {
+        return suggestedChoices;
+    }
+
+    /**
+     * @param suggestedChoices the suggestedChoices to set
+     */
+    public void setSuggestedChoices(List<Choice> suggestedChoices) {
+        this.suggestedChoices = suggestedChoices;
     }
   
     

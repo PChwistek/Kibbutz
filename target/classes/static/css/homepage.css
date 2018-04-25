@@ -100,3 +100,14 @@ article.post {
     margin-top: 1em;
 }
 
+#addOptions {
+    cursor: pointer;
+}
+
+#removeOptions {
+    cursor: pointer;
+}
+
+.suggestion-icon {
+        cursor: pointer;
+}

@@ -53,13 +53,13 @@ public class SurveyController {
         
         Calendar cal = Calendar.getInstance(); // creates calendar
         theSurvey.setCreationTime(new Date());
-        cal.add(Calendar.MINUTE, 1); // 2 minutes
+        System.out.println(surveyForm.getMinutes());
+        System.out.println(surveyForm.isCanSuggest());
+        cal.add(Calendar.MINUTE, surveyForm.getMinutes()); // 2 minutes
         theSurvey.setTerminationTime(cal.getTime()); // returns new date object, one hour in the future
         theSurvey.setActive(true);
         SurveyPicture thePicture = new SurveyPicture(file);
         
-        System.out.println(theSurvey.getCreationTime().getTime());
-        System.out.println(theSurvey.getTerminationTime().getTime());
         
         try{
             
@@ -73,7 +73,7 @@ public class SurveyController {
         User someUser = userRepo.findOne(user.getId());
         someUser.getSurveys().add(theSurvey);
         userRepo.save(someUser);
-        return new RedirectView("/user");
+        return new RedirectView("/");
     }
     
 }

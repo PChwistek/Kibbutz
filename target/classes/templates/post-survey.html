@@ -2,14 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Kibbutz - Post a Survey</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" type="text/css" th:href="@{/css/bulma.min.css}"/>
-        <link rel="stylesheet" type="text/css" th:href="@{/css/homepage.css}"/>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <link rel="icon" th:href="@{/img/favicon.ico}" />
+
+               <div th:replace="fragments/header :: header">... </div>
+
     </head>
     <body>
-        <div th:replace="fragments/header :: header">... </div>
+        <div th:replace="fragments/navbar :: navbar">... </div>
         <div class="container">
             <section>
                 <div class="column is-8 is-offset-2">
@@ -26,15 +25,20 @@
                                 <div class="field is-horizontal">
                                     <div class="field-body">
                                         <div class="field">
-                                            <input class = "input" type="text" th:field="*{title}" placeholder="Title"/>
+                                            <input class = "input" type="text" th:field="*{title}" placeholder="Title (required)"/>
                                         </div>
                                         <div class="field">
                                             <p class="control has-icons-left">
                                                 <span class="select is-fullwidth">
-                                                    <select>
-                                                        <option>2 minutes</option>
-                                                        <option>5 minutes</option>
-                                                        <option>15 minutes</option>
+                                                    <select th:field="*{minutes}">
+                                                        <option th:value="2">2 minutes</option>
+                                                        <option th:value="5">5 minutes</option>
+                                                        <option th:value="15">15 minutes</option>
+                                                        <option th:value="30">30 minutes</option>
+                                                        <option th:value="45">45 minutes</option>
+                                                        <option th:value="60">1 hour </option>
+                                                        <option th:value="1440">24 hours </option>
+                                                        <option th:value="2"> custom </option>
                                                     </select>
                                                 </span>
                                                 <span class="icon is-small is-left">
@@ -51,16 +55,32 @@
                                     <div class="field-body">
                                         <div class="field">
                                             <div class="control">
-                                                <input class="input" type="text" th:field="*{choiceOne}" placeholder="Option 1" /> 
+                                                <input class="input" type="text" th:field="*{choiceOne}" placeholder="Option 1 (required)" /> 
                                             </div>
                                         </div>
                                         <div class="field">
                                             <div class="control">
-                                                <input class="input" type="text" th:field="*{choiceTwo}" placeholder="Option 2" />
+                                                <input class="input" type="text" th:field="*{choiceTwo}" placeholder="Option 2 (required)" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                 <div id='secondRow' class="field is-horizontal is-invisible is-overlay">
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <div class="control">
+                                                <input class="input" type="text" th:field="*{choiceThree}" placeholder="Option 3 (not required)" /> 
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="control">
+                                                <input class="input" type="text" th:field="*{choiceFour}" placeholder="Option 4 (not required)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p id = 'addDiv' class="article-subtitle has-text-centered"><span id="addOptions"><i class="fas fa-plus fa-xs"></i> add more options</span></p>
+                                <p id='removeDiv' class="article-subtitle has-text-centered is-invisible is-overlay is-unselectable"><span id="removeOptions"><i class="fas fa-minus fa-xs"></i> remove options</span></p>
                                 <div class="field">
                                     <div class="file has-name is-fullwidth">
                                         <label class="file-label">
@@ -82,13 +102,11 @@
                                 <div class="field ">
                                     <div class="control has-text-centered">
                                         <label class="checkbox no-padding">
-                                            <input type="checkbox" />
-                                            Allow the kibbutz to suggest an answer.
+                                            <input type="checkbox" th:field="*{canSuggest}" />
+                                            Allow the kibbutz to suggest an option.
                                         </label>
                                     </div>
                                 </div>
-
-
                                 <div class="field has-text-centered">
                                     <a id='clear-button' class='button'> Clear </a>
                                     <input class= "button is-primary" type='submit' value='Submit' />
@@ -105,6 +123,25 @@
         <div th:replace="fragments/footer :: footer">... </div>
     </body>
     <script>
-        $('#file').on("change", function(){ $('#file-name').text($('#file').val()) });
+         $(document).ready(function () {
+            $('#file').on("change", function(){ $('#file-name').text($('#file').val()) });
+            
+            $('#addOptions').click(function(){
+            
+                $('#secondRow').removeClass('is-invisible is-overlay');
+                $('#removeDiv').removeClass('is-invisible is-overlay is-unselectable');
+                $('#addDiv').addClass('is-invisible is-overlay is-unselectable');
+            
+            });
+            
+            $('#removeOptions').click(function(){
+                $('#secondRow').addClass('is-invisible is-overlay');
+                $('#addDiv').removeClass('is-invisible is-overlay is-unselectable');
+                $('#removeDiv').addClass('is-invisible is-overlay is-unselectable');
+            
+            });
+            
+        });
     </script>
+  
 </html>

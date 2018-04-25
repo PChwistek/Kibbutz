@@ -77,7 +77,6 @@ public class SurveyDisplayController {
         model.addAttribute("choiceForm", new ChoiceForm());
         model.addAttribute("voted", voted);
         model.addAttribute("isActive", theSurvey.isActive());
-      
         
         if(theSurvey.getProof() != null){
             

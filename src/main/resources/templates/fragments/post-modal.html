@@ -1,0 +1,31 @@
+<div th:fragment="post-modal">
+        <div th:id="${'postmodal' + survey.surveyId}" class="modal">
+        <div class="modal-background"  th:onclick="'closeModal(\'' + ${survey.surveyId} + '\');'"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title" th:text="${survey.title}"></p>
+                <button th:onclick="'closeModal(\'' + ${survey.surveyId} + '\');'" class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="box content">
+                    <ol>
+                        <li>
+                            <article class="post">
+                                <div class="media">
+                                    <div class="media-content">
+                                        <div class="content">
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+            </footer>
+        </div>
+    </div>
+</div>
+
