@@ -22,12 +22,22 @@ public class Choice {
     private Long id;
     private String name;
     private int votes;
+    private String suggesterUsername;
+    private boolean suggested;
     
     public Choice(){};
     
     public Choice(String name){
         this.name = name;
         this.votes = 0;
+        this.suggested = false;
+        this.suggesterUsername = "";
+    }
+    
+    public Choice(String name, String suggesterUsername){
+        this.name = name;
+        this.votes = 0;
+        this.suggested = true;
     }
     
     public void incrementVote(){
@@ -78,6 +88,34 @@ public class Choice {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return the suggesterUsername
+     */
+    public String getSuggesterUsername() {
+        return suggesterUsername;
+    }
+
+    /**
+     * @param suggesterUsername the suggesterUsername to set
+     */
+    public void setSuggesterUsername(String suggesterUsername) {
+        this.suggesterUsername = suggesterUsername;
+    }
+
+    /**
+     * @return the suggested
+     */
+    public boolean isSuggested() {
+        return suggested;
+    }
+
+    /**
+     * @param suggested the suggested to set
+     */
+    public void setSuggested(boolean suggested) {
+        this.suggested = suggested;
     }
     
 }

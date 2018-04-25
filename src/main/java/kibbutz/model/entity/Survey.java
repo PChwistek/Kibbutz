@@ -9,6 +9,7 @@ import kibbutz.model.entity.Choice;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -96,6 +97,7 @@ public class Survey {
         if(surveyForm.getChoiceFour() != null && !surveyForm.getChoiceFour().equals("")){
             this.choices.add(new Choice(surveyForm.getChoiceFour()));
         }
+        
         this.canSuggest = surveyForm.isCanSuggest();
         
     }
@@ -179,7 +181,7 @@ public class Survey {
      * @return the options
      */
     public List<Choice> getChoices() {
-        return choices;
+        return this.choices.stream().filter(choice -> choice.isSuggested() == false).collect(Collectors.toList());
     }
 
     /**
@@ -305,7 +307,7 @@ public class Survey {
      * @return the suggestedChoices
      */
     public List<Choice> getSuggestedChoices() {
-        return suggestedChoices;
+        return this.choices.stream().filter(choice -> choice.isSuggested() == true).collect(Collectors.toList());
     }
 
     /**

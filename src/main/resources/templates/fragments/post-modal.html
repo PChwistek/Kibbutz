@@ -9,12 +9,12 @@
             <section class="modal-card-body">
                 <div class="box content">
                     <ol>
-                        <li>
+                        <li th:each="choice : ${survey.suggestedChoices}">
                             <article class="post">
                                 <div class="media">
                                     <div class="media-content">
                                         <div class="content">
-                                        
+                                            <p th:text="${choice.name + 'posted by: ' + choice.suggesterUsername}" />
                                         </div>
                                     </div>
                                 </div>

@@ -57,7 +57,6 @@ public class HomeController {
         System.out.println(theUser.getUsername());
         List<Survey> allActive = surveyRepo.findAllActive();
         List<Long> allActiveVoted = theUser.getVotingHistory().stream().filter(survey -> survey.isActive()).map(survey -> survey.getSurveyId()).collect(Collectors.toList());
-        
         model.addAttribute("surveys", allActive);
         model.addAttribute("allActiveVoted", allActiveVoted);
         model.addAttribute("user", theUser);
