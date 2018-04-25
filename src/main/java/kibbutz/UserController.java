@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import kibbutz.model.entity.Survey;
 import kibbutz.model.entity.User;
 import kibbutz.model.form.ChoiceForm;
+import kibbutz.model.form.SuggestedChoiceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,6 +78,8 @@ public class UserController {
         model.addAttribute("choiceForm", new ChoiceForm());
         model.addAttribute("following", following);
         model.addAttribute("isFollowing", isFollowing);
+        model.addAttribute("suggestionForm", new SuggestedChoiceForm());
+
         return "user-detail";
     }
     

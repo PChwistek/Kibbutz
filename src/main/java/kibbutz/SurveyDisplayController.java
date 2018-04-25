@@ -20,6 +20,7 @@ import kibbutz.model.form.ChoiceForm;
 import kibbutz.model.form.CommentForm;
 import kibbutz.model.form.ProofForm;
 import kibbutz.model.form.SatisfiedForm;
+import kibbutz.model.form.SuggestedChoiceForm;
 import org.h2.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,6 +78,7 @@ public class SurveyDisplayController {
         model.addAttribute("choiceForm", new ChoiceForm());
         model.addAttribute("voted", voted);
         model.addAttribute("isActive", theSurvey.isActive());
+        model.addAttribute("suggestionForm", new SuggestedChoiceForm());
         
         if(theSurvey.getProof() != null){
             

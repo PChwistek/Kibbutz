@@ -24,6 +24,7 @@ public class Choice {
     private int votes;
     private String suggesterUsername;
     private boolean suggested;
+    private boolean mainChoice;
     
     public Choice(){};
     
@@ -32,12 +33,15 @@ public class Choice {
         this.votes = 0;
         this.suggested = false;
         this.suggesterUsername = "";
+        this.mainChoice = true;
     }
     
     public Choice(String name, String suggesterUsername){
         this.name = name;
+        this.suggesterUsername = suggesterUsername;
         this.votes = 0;
         this.suggested = true;
+        this.mainChoice = false;
     }
     
     public void incrementVote(){
@@ -116,6 +120,20 @@ public class Choice {
      */
     public void setSuggested(boolean suggested) {
         this.suggested = suggested;
+    }
+
+    /**
+     * @return the mainChoice
+     */
+    public boolean isMainChoice() {
+        return mainChoice;
+    }
+
+    /**
+     * @param mainChoice the mainChoice to set
+     */
+    public void setMainChoice(boolean mainChoice) {
+        this.mainChoice = mainChoice;
     }
     
 }

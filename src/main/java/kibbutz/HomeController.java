@@ -17,6 +17,7 @@ import kibbutz.model.entity.User;
 import kibbutz.model.form.LoginForm;
 import kibbutz.model.form.ChoiceForm;
 import kibbutz.model.form.SignUpForm;
+import kibbutz.model.form.SuggestedChoiceForm;
 import org.h2.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,6 +60,7 @@ public class HomeController {
         List<Long> allActiveVoted = theUser.getVotingHistory().stream().filter(survey -> survey.isActive()).map(survey -> survey.getSurveyId()).collect(Collectors.toList());
         model.addAttribute("surveys", allActive);
         model.addAttribute("allActiveVoted", allActiveVoted);
+        model.addAttribute("suggestionForm", new SuggestedChoiceForm());
         model.addAttribute("user", theUser);
         model.addAttribute("choiceForm", new ChoiceForm());
 

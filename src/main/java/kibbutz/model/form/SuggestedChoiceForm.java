@@ -17,7 +17,7 @@ public class SuggestedChoiceForm {
     @NotNull @Size(min=1, max=100)
     private String text;
     
-    protected SuggestedChoiceForm(){}
+    public SuggestedChoiceForm(){}
     
     /**
      * @return the text

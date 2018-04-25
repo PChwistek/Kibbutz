@@ -1,33 +1,35 @@
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\form\SignUpForm.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\PasswordHasher.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\entity\Proof.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\form\ProofForm.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\Application.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\entity\Choice.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\HomeController.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\form\ChoiceForm.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\ChoiceRepository.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\FollowerController.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\form\SatisfiedForm.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\SurveyController.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\UserRepository.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\entity\Comment.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\VoteController.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\entity\User.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\SignUpController.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\form\LoginForm.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\form\CommentForm.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\form\SurveyForm.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\SecurityConfig.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\ScheduledController.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\BeanConfig.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\UserController.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\entity\SurveyPicture.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\entity\Survey.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\ProofController.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\ProofPictureRepository.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\LoginController.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\model\entity\ProofPicture.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\SurveyDisplayController.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\SurveyPictureRepository.java
-C:\Users\Philz zee Kill\Documents\NetBeansProjects\Kibbutz\src\main\java\kibbutz\SurveyRepository.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/LoginController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/BeanConfig.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/ProofPictureRepository.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/ChoiceRepository.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/Survey.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/Application.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/ProofController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SurveyRepository.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/form/SignUpForm.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/Proof.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SurveyPictureRepository.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/form/SurveyForm.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/UserRepository.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/form/SatisfiedForm.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/ProofPicture.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/FollowerController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/form/ChoiceForm.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/User.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/ScheduledController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/form/ProofForm.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/VoteController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SignUpController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SurveyDisplayController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/form/SuggestedChoiceForm.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/HomeController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/Comment.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/UserController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/Choice.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/form/CommentForm.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SecurityConfig.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SurveySuggestionController.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/form/LoginForm.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/model/entity/SurveyPicture.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/PasswordHasher.java
+/Users/Phil/NetBeansProjects/Kibbutz/src/main/java/kibbutz/SurveyController.java

@@ -41,7 +41,7 @@
                                             <img class="image" th:src="${survey.picture.id}" /> 
                                             <form action="#" th:unless="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.author}" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
                                                 <div class="control">
-                                                    <span th:each="choice: ${survey.choices}">
+                                                    <span th:each="choice: ${survey.originalChoices}">
                                                         <label class="radio">
                                                             <input type="radio" th:name="${choiceForm.choiceOne}" th:field="${choiceForm.choiceOne}" th:value= "${choice.name}" th:text="${' ' + choice.name}" />
                                                             <span th:text="': ' +  ${choice.votes}" />  
@@ -52,7 +52,7 @@
                                             </form> 
                                             <div th:if="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.author}">
                                                 <br></br>
-                                                <span th:each="choice: ${survey.choices}">
+                                                <span th:each="choice: ${survey.originalChoices}">
                                                     <span th:text="${' ' + choice.name}" />
                                                     <span th:text="': ' +  ${choice.votes}" /> 
                                                 </span>

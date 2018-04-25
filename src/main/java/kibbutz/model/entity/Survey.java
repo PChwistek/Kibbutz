@@ -29,15 +29,15 @@ import kibbutz.model.form.SurveyForm;
  */
 @Entity
 public class Survey {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long surveyId;
-    @Temporal(value=TemporalType.TIMESTAMP)
-    @Column(name="CREATED_TIME")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name = "CREATED_TIME")
     private Date creationTime;
-    @Temporal(value=TemporalType.TIMESTAMP)
-    @Column(name="TO_TERMINATE_TIME")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name = "TO_TERMINATE_TIME")
     private Date terminationTime;
     private String text;
     private String title;
@@ -46,63 +46,73 @@ public class Survey {
     private int minutesLeft;
     private int karmaPotential = 0;
     private boolean canSuggest;
-    
+
     @OneToMany(
             cascade = {CascadeType.MERGE, CascadeType.REFRESH},
             orphanRemoval = true
     )
     @JoinColumn(name = "surveyId")
     private List<Choice> choices = new ArrayList();
-    
+
     @OneToMany(
-        cascade = {CascadeType.MERGE, CascadeType.REFRESH},
-        orphanRemoval = true
+            cascade = {CascadeType.MERGE, CascadeType.REFRESH},
+            orphanRemoval = true
     )
     @JoinColumn(name = "surveyId")
     private List<Choice> suggestedChoices = new ArrayList();
-    
+
+    @OneToMany(
+            cascade = {CascadeType.MERGE, CascadeType.REFRESH},
+            orphanRemoval = true
+    )
+    @JoinColumn(name = "surveyId")
+    private List<Choice> originalChoices = new ArrayList();
+
     @OneToMany(
             cascade = {CascadeType.MERGE, CascadeType.REFRESH},
             orphanRemoval = true
     )
     @JoinColumn(name = "surveyId")
     private List<Comment> comments = new ArrayList();
-    
+
     @OneToOne(
-        cascade = {CascadeType.MERGE, CascadeType.REFRESH},
-        orphanRemoval = true
+            cascade = {CascadeType.MERGE, CascadeType.REFRESH},
+            orphanRemoval = true
     )
     @JoinColumn(name = "surveyId")
     private SurveyPicture picture;
-    
+
     @OneToOne(
-        cascade = {CascadeType.MERGE, CascadeType.REFRESH},
-        orphanRemoval = true
+            cascade = {CascadeType.MERGE, CascadeType.REFRESH},
+            orphanRemoval = true
     )
     @JoinColumn(name = "surveyId")
     private Proof proof;
+
+    public Survey() {
+    }
+
+    ;
     
-    public Survey(){};
-    
-    public Survey(SurveyForm surveyForm){
+    public Survey(SurveyForm surveyForm) {
         this.title = surveyForm.getTitle();
         this.text = surveyForm.getText();
         this.choices.add(new Choice(surveyForm.getChoiceOne()));
         this.choices.add(new Choice(surveyForm.getChoiceTwo()));
-        
-        if(surveyForm.getChoiceThree() != null && !surveyForm.getChoiceThree().equals("")){
+
+        if (surveyForm.getChoiceThree() != null && !surveyForm.getChoiceThree().equals("")) {
             this.choices.add(new Choice(surveyForm.getChoiceThree()));
         }
-        
-        if(surveyForm.getChoiceFour() != null && !surveyForm.getChoiceFour().equals("")){
+
+        if (surveyForm.getChoiceFour() != null && !surveyForm.getChoiceFour().equals("")) {
             this.choices.add(new Choice(surveyForm.getChoiceFour()));
         }
-        
+
         this.canSuggest = surveyForm.isCanSuggest();
-        
+
     }
-    
-    public void incrementKarma(){
+
+    public void incrementKarma() {
         this.karmaPotential++;
     }
 
@@ -120,7 +130,6 @@ public class Survey {
         this.surveyId = id;
     }
 
-  
     /**
      * @return the text
      */
@@ -181,14 +190,7 @@ public class Survey {
      * @return the options
      */
     public List<Choice> getChoices() {
-        return this.choices.stream().filter(choice -> choice.isSuggested() == false).collect(Collectors.toList());
-    }
-
-    /**
-     * @param options the options to set
-     */
-    public void setOptions(List<Choice> choices) {
-        this.choices = choices;
+        return this.choices;
     }
 
     /**
@@ -307,7 +309,7 @@ public class Survey {
      * @return the suggestedChoices
      */
     public List<Choice> getSuggestedChoices() {
-        return this.choices.stream().filter(choice -> choice.isSuggested() == true).collect(Collectors.toList());
+        return this.choices.stream().filter(choice -> choice.isSuggested()).collect(Collectors.toList());
     }
 
     /**
@@ -316,6 +318,19 @@ public class Survey {
     public void setSuggestedChoices(List<Choice> suggestedChoices) {
         this.suggestedChoices = suggestedChoices;
     }
-  
-    
+
+    /**
+     * @return the originalChoices
+     */
+    public List<Choice> getOriginalChoices() {
+        return this.choices.stream().filter(choice -> choice.isMainChoice() == true).collect(Collectors.toList());
+    }
+
+    /**
+     * @param originalChoices the originalChoices to set
+     */
+    public void setOriginalChoices(List<Choice> originalChoices) {
+        this.originalChoices = originalChoices;
+    }
+
 }

@@ -101,7 +101,7 @@
                                         <img class="image" th:src="${survey.picture.id}" /> 
                                         <form action="#" th:unless="${voted == true}" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
                                             <div class="control">
-                                                <span th:each="choice: ${survey.choices}">
+                                                <span th:each="choice: ${survey.originalChoices}">
                                                     <label class="radio">
                                                         <input type="radio" th:name="${choiceForm.choiceOne}" th:field="${choiceForm.choiceOne}" th:value= "${choice.name}" th:text="${' ' + choice.name}" />
                                                         <span th:text="': ' +  ${choice.votes}" />  
@@ -113,14 +113,14 @@
                                     </div>
                                     <div th:if="${user.username == survey.author or survey.proof == null or voted == false or proofReviewed == true}">
                                         <br></br>
-                                        <span th:each="choice: ${survey.choices}">
+                                        <span th:each="choice: ${survey.originalChoices}">
                                             <span th:text="${' ' + choice.name}" />
                                             <span th:text="': ' +  ${choice.votes}" /> 
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                                                            <div th:replace="fragments/post-modal :: post-modal"> ... </div>
+                            <div th:replace="fragments/post-modal :: post-modal"> ... </div>
 
                         </article>
                         <article th:if="${survey.proof != null}" class="post">

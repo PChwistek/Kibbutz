@@ -5,11 +5,10 @@
  */
 package kibbutz;
 
+import java.util.List;
 import kibbutz.model.entity.Choice;
-import kibbutz.model.entity.Comment;
 import kibbutz.model.entity.Survey;
 import kibbutz.model.entity.User;
-import kibbutz.model.form.CommentForm;
 import kibbutz.model.form.SuggestedChoiceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,18 +35,52 @@ public class SurveySuggestionController {
     @Autowired
     private UserRepository userRepo;
     
+    @Autowired
+    private ChoiceRepository choiceRepo;
+    
     
     @PostMapping("survey/post_suggestion/{id}")
     public ModelAndView postComment(@PathVariable("id") Long id, Model model, @SessionAttribute("user") User user,
-            @ModelAttribute("suggestedForm") SuggestedChoiceForm suggestedForm){
+            @ModelAttribute("suggestionForm") SuggestedChoiceForm suggestedForm){
         
         User poster = userRepo.findUserByUsername(user.getUsername());
         Survey theSurvey = surveyRepo.findOne(id);
-        theSurvey.getSuggestedChoices().add(new Choice(suggestedForm.getText(), poster.getUsername()));
+        theSurvey.getChoices().add(new Choice(suggestedForm.getText(), poster.getUsername()));
+        findMaxSetMain(theSurvey.getChoices());
         surveyRepo.save(theSurvey);
-    
+        
+        
         return new ModelAndView("redirect:/posted_survey?id=" + id);
     }
     
+    
+    
+    private void findMaxSetMain(List<Choice> choiceList){
+        
+        Choice currentMax = choiceList.stream().filter(choice -> choice.isMainChoice() && choice.isSuggested()).findFirst().orElse(null);
+        Choice nextMax = null;
+        if(currentMax != null){
+            for(Choice choice: choiceList){
+                if(choice.getVotes() > currentMax.getVotes()){
+                    currentMax.setMainChoice(false);
+                    choiceRepo.save(currentMax);
+                    nextMax = choice;
+                }
+            }
+            if(nextMax != null){
+               nextMax.setMainChoice(true);
+               choiceRepo.save(nextMax);    
+            }
+        } else {
+            
+            Choice sugg = choiceList.stream().filter(choice -> choice.isSuggested()).findFirst().orElse(null);
+            if(sugg != null){
+                sugg.setMainChoice(true);
+                choiceRepo.save(sugg);
+            }
+            
+        }
+        
+    }
     
 }
