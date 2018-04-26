@@ -38,14 +38,29 @@ public class SurveySuggestionController {
     @Autowired
     private ChoiceRepository choiceRepo;
     
+    @PostMapping("survey/choice/vote_suggestion/{id}")
+    public ModelAndView rank(@PathVariable("id") Long id, Model model, 
+            @SessionAttribute("user") User user){
+        
+        User theUser = userRepo.findOne(user.getId());
+        Choice sugg = choiceRepo.findOne(id);
+        sugg.incrementRanking();
+        choiceRepo.save(sugg);
+        findMaxSetMain(sugg.getParentSurvey().getChoices());
+        theUser.getVotedSuggestions().add(sugg);
+        userRepo.save(theUser);
+        
+        return new ModelAndView("redirect:/");
+    }
+    
     
     @PostMapping("survey/post_suggestion/{id}")
-    public ModelAndView postComment(@PathVariable("id") Long id, Model model, @SessionAttribute("user") User user,
+    public ModelAndView postSuggestion(@PathVariable("id") Long id, Model model, @SessionAttribute("user") User user,
             @ModelAttribute("suggestionForm") SuggestedChoiceForm suggestedForm){
         
         User poster = userRepo.findUserByUsername(user.getUsername());
         Survey theSurvey = surveyRepo.findOne(id);
-        theSurvey.getChoices().add(new Choice(suggestedForm.getText(), poster.getUsername()));
+        theSurvey.getChoices().add(new Choice(suggestedForm.getText(), false, poster));
         findMaxSetMain(theSurvey.getChoices());
         surveyRepo.save(theSurvey);
         
@@ -61,14 +76,16 @@ public class SurveySuggestionController {
         Choice nextMax = null;
         if(currentMax != null){
             for(Choice choice: choiceList){
-                if(choice.getVotes() > currentMax.getVotes()){
+                if(choice.getRanking() > currentMax.getRanking()){
                     currentMax.setMainChoice(false);
-                    choiceRepo.save(currentMax);
                     nextMax = choice;
                 }
             }
             if(nextMax != null){
+               nextMax.setVotes(currentMax.getVotes());
+               currentMax.setVotes(0);
                nextMax.setMainChoice(true);
+               choiceRepo.save(currentMax);
                choiceRepo.save(nextMax);    
             }
         } else {

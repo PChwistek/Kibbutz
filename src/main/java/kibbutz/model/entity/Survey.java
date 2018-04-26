@@ -13,10 +13,12 @@ import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -41,21 +43,31 @@ public class Survey {
     private Date terminationTime;
     private String text;
     private String title;
-    private String author;
     private boolean active;
     private int minutesLeft;
     private int karmaPotential = 0;
     private boolean canSuggest;
 
+    @OneToOne()
+    @JoinColumn(name = "WINNING")
+    private Choice winning;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User poster;
+
     @OneToMany(
             cascade = {CascadeType.MERGE, CascadeType.REFRESH},
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
+
     )
     @JoinColumn(name = "surveyId")
     private List<Choice> choices = new ArrayList();
 
     @OneToMany(
             cascade = {CascadeType.MERGE, CascadeType.REFRESH},
+            fetch = FetchType.EAGER,
             orphanRemoval = true
     )
     @JoinColumn(name = "surveyId")
@@ -194,20 +206,6 @@ public class Survey {
     }
 
     /**
-     * @return the username
-     */
-    public String getAuthor() {
-        return author;
-    }
-
-    /**
-     * @param username the username to set
-     */
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    /**
      * @return the thePicture
      */
     public SurveyPicture getPicture() {
@@ -331,6 +329,34 @@ public class Survey {
      */
     public void setOriginalChoices(List<Choice> originalChoices) {
         this.originalChoices = originalChoices;
+    }
+
+    /**
+     * @return the poster
+     */
+    public User getPoster() {
+        return poster;
+    }
+
+    /**
+     * @param poster the poster to set
+     */
+    public void setPoster(User poster) {
+        this.poster = poster;
+    }
+
+    /**
+     * @return the winning
+     */
+    public Choice getWinning() {
+        return winning;
+    }
+
+    /**
+     * @param winning the winning to set
+     */
+    public void setWinning(Choice winning) {
+        this.winning = winning;
     }
 
 }

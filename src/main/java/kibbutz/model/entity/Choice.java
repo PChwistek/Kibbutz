@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -22,26 +25,43 @@ public class Choice {
     private Long id;
     private String name;
     private int votes;
-    private String suggesterUsername;
+    private int ranking;
     private boolean suggested;
     private boolean mainChoice;
+    
+    @ManyToOne
+    @JoinColumn(name = "surveyId")
+    private Survey parentSurvey;
+    
+    @OneToOne
+    @JoinColumn(name = "userId")
+    private User suggester;
     
     public Choice(){};
     
     public Choice(String name){
         this.name = name;
         this.votes = 0;
+        this.ranking = 0;
         this.suggested = false;
-        this.suggesterUsername = "";
         this.mainChoice = true;
     }
     
-    public Choice(String name, String suggesterUsername){
+    public Choice(String name, boolean mainChoice ){
         this.name = name;
-        this.suggesterUsername = suggesterUsername;
         this.votes = 0;
+        this.ranking = 0;
         this.suggested = true;
-        this.mainChoice = false;
+        this.mainChoice = mainChoice;
+    }
+    
+    public Choice(String name, boolean mainChoice, User suggester ){
+        this.name = name;
+        this.votes = 0;
+        this.ranking = 0;
+        this.suggested = true;
+        this.mainChoice = mainChoice;
+        this.suggester = suggester;
     }
     
     public void incrementVote(){
@@ -50,6 +70,14 @@ public class Choice {
     
     public void decrementVotes(){
         this.votes--;
+    }
+    
+    public void incrementRanking(){
+        this.ranking++;
+    }
+    
+    public void decrementRanking(){
+        this.ranking--;
     }
 
     /**
@@ -95,20 +123,6 @@ public class Choice {
     }
 
     /**
-     * @return the suggesterUsername
-     */
-    public String getSuggesterUsername() {
-        return suggesterUsername;
-    }
-
-    /**
-     * @param suggesterUsername the suggesterUsername to set
-     */
-    public void setSuggesterUsername(String suggesterUsername) {
-        this.suggesterUsername = suggesterUsername;
-    }
-
-    /**
      * @return the suggested
      */
     public boolean isSuggested() {
@@ -134,6 +148,48 @@ public class Choice {
      */
     public void setMainChoice(boolean mainChoice) {
         this.mainChoice = mainChoice;
+    }
+
+    /**
+     * @return the parentSurvey
+     */
+    public Survey getParentSurvey() {
+        return parentSurvey;
+    }
+
+    /**
+     * @param parentSurvey the parentSurvey to set
+     */
+    public void setParentSurvey(Survey parentSurvey) {
+        this.parentSurvey = parentSurvey;
+    }
+
+    /**
+     * @return the ranking
+     */
+    public int getRanking() {
+        return ranking;
+    }
+
+    /**
+     * @param ranking the ranking to set
+     */
+    public void setRanking(int ranking) {
+        this.ranking = ranking;
+    }
+
+    /**
+     * @return the suggester
+     */
+    public User getSuggester() {
+        return suggester;
+    }
+
+    /**
+     * @param suggester the suggester to set
+     */
+    public void setSuggester(User suggester) {
+        this.suggester = suggester;
     }
     
 }

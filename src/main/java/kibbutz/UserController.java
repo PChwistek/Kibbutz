@@ -68,7 +68,11 @@ public class UserController {
             isFollowing = followers.stream().anyMatch(username -> username.equalsIgnoreCase(user.getUsername()));
         }
         
-        List<Long> allVoted = theUser.getVotingHistory().stream().filter(survey -> survey.getAuthor().equalsIgnoreCase(author)).map(survey -> survey.getSurveyId()).collect(Collectors.toList());
+        List<Long> allVoted = theUser.getVotingHistory()
+                .stream().
+                filter(survey -> survey.getPoster().getUsername().equalsIgnoreCase(author)).
+                map(survey -> survey.getSurveyId()).
+                collect(Collectors.toList());
         
         model.addAttribute("allActiveVoted", allVoted);
         model.addAttribute("history", viewedUser.getVotingHistory());

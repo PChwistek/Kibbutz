@@ -52,6 +52,7 @@ public class LoginController {
             model.addAttribute("status", "Incorrect Login Credentials!");
             return new ModelAndView("redirect:/", model);
         }
+        
         model.addAttribute("user", someUser);
         return new ModelAndView("redirect:/", model);
         

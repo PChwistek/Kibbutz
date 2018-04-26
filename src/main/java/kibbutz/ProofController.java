@@ -68,9 +68,8 @@ public class ProofController {
             @ModelAttribute("satisfiedForm") SatisfiedForm satisfiedForm, @SessionAttribute("user") User user){
             
         Survey theSurvey = surveyRepo.findOne(surveyId);
-        User viewedUser = userRepo.findUserByUsername(theSurvey.getAuthor());
+        User viewedUser = theSurvey.getPoster();
         
-
         String level = satisfiedForm.getSatisfaction();
 
         if(level.equals("satisfied")){
@@ -84,6 +83,7 @@ public class ProofController {
             
         User theUser = userRepo.findUserByUsername(user.getUsername());
         theUser.getSurveysReviewed().add(theSurvey);
+        theUser.setKarmaScore(theUser.getKarmaScore() + 1);
         
         surveyRepo.save(theSurvey);
         userRepo.save(theUser);

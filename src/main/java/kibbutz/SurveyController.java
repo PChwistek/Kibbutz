@@ -48,7 +48,7 @@ public class SurveyController {
             @SessionAttribute("user") User user, @RequestParam("file") MultipartFile file){
         
         Survey theSurvey = new Survey(surveyForm);
-        theSurvey.setAuthor(user.getUsername());
+        theSurvey.setPoster(user);
         System.out.println(file.getContentType());
         
         Calendar cal = Calendar.getInstance(); // creates calendar

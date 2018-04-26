@@ -63,7 +63,7 @@ public class SurveyDisplayController {
         Survey theSurvey = surveyRepo.findOne(id);
         User theUser = userRepo.findUserByUsername(user.getUsername());
         
-        boolean voted = theSurvey.getAuthor().equalsIgnoreCase(user.getUsername());
+        boolean voted = theSurvey.getPoster().getUsername().equalsIgnoreCase(user.getUsername());
         boolean proofReviewed = voted;
         Survey tempSurvey = null;
         if(!voted){

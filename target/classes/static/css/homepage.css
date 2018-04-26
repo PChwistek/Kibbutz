@@ -109,5 +109,9 @@ article.post {
 }
 
 .suggestion-icon {
-        cursor: pointer;
+    cursor: pointer;
+}
+
+.is-vote {
+    cursor: pointer;
 }

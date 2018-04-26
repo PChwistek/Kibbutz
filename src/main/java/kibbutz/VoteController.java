@@ -5,6 +5,7 @@
  */
 package kibbutz;
 
+import kibbutz.model.entity.Choice;
 import kibbutz.model.form.ChoiceForm;
 import kibbutz.model.entity.Survey;
 import kibbutz.model.entity.User;
@@ -33,6 +34,9 @@ public class VoteController {
     @Autowired
     private UserRepository userRepo;
     
+    @Autowired
+    private ChoiceRepository choiceRepo;
+    
     
     @PostMapping("/vote")
     public RedirectView vote(@RequestParam("id") Long id, @ModelAttribute ChoiceForm choice, @SessionAttribute("user") User user, 
@@ -41,13 +45,14 @@ public class VoteController {
         Survey theSurvey = surveyRepo.findOne(id);
         User theUser = userRepo.findUserByUsername(user.getUsername());
         
-        System.out.println(choice.getChoiceOne());
-                
-        if(!theSurvey.getAuthor().equalsIgnoreCase(theUser.getUsername())){
-            if(choice.getChoiceOne().equals(theSurvey.getChoices().get(0).getName())){
-                theSurvey.getChoices().get(0).incrementVote();
-            } else {
-                theSurvey.getChoices().get(1).incrementVote();
+        if(!theSurvey.getPoster().getId().equals(user.getId())){
+         
+            Choice votedChoice = theSurvey.getChoices().stream().
+                    filter(temp -> temp.getName().equals(choice.getChoiceOne())).findFirst().orElse(null);
+            
+            if(votedChoice != null){
+                votedChoice.incrementVote();
+                choiceRepo.save(votedChoice);
             }
             
             theSurvey.incrementKarma();

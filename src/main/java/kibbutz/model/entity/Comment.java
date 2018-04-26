@@ -25,7 +25,6 @@ public class Comment {
     private String text;
     private String username;
 
-    
     public Comment(){}
     
     public Comment(Long authorId, String text, String username){

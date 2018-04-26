@@ -20,7 +20,7 @@
                             <article class="post">
                                 <h4>
                                     <a th:href="@{'posted_survey?id=' + ${survey.surveyId}}"> 
-                                        <p th:text="${survey.title}" />  
+                                        <span th:text="${survey.title}" />  
                                     </a> 
                                     <div class="has-text-right">
                                         <span th:if="${survey.canSuggest == true}" th:onclick="'setUpClick(\'' + ${survey.surveyId} + '\');'" class="suggestion-icon has-text-grey-light is-right"><i class="fas fa-pencil-alt"></i></span>
@@ -30,8 +30,8 @@
                                     </div>
                                 </h4>
                                 <p> submitted by
-                                    <a th:href="'/profile?author=' + ${survey.author}">
-                                        <span th:text="${survey.author}" />
+                                    <a th:href="'/profile?author=' + ${survey.poster.username}">
+                                        <span th:text="${survey.poster.username}" />
                                     </a>   
                                 </p>
                                 <div class="media">
@@ -39,7 +39,7 @@
                                         <div class="content">
                                             <p th:text="${survey.text}" class="article-subtitle" />     
                                             <img class="image" th:src="${survey.picture.id}" /> 
-                                            <form action="#" th:unless="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.author}" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
+                                            <form action="#" th:unless="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.poster.username}" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
                                                 <div class="control">
                                                     <span th:each="choice: ${survey.originalChoices}">
                                                         <label class="radio">
@@ -50,7 +50,7 @@
                                                 </div>
                                                 <input class="button" type="submit" value="Vote"/>
                                             </form> 
-                                            <div th:if="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.author}">
+                                            <div th:if="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.poster.username}">
                                                 <br></br>
                                                 <span th:each="choice: ${survey.originalChoices}">
                                                     <span th:text="${' ' + choice.name}" />

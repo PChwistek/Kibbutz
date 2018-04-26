@@ -12,7 +12,7 @@
     <div class="container">
         <div class="columns">
             <div class="column is-2">
-                <div class="card" th:if= "${user.username == survey.author and survey.proof == null and isActive == false}">
+                <div class="card" th:if= "${user.username == survey.poster.username and survey.proof == null and isActive == false}">
                     <header class="card-header">
                         <p class="card-header-title"> Post Proof </p>
                     </header>
@@ -48,10 +48,10 @@
                 </div>
                 <div class="card" th:if= "${survey.proof == null and isActive == true}">
                     <header class="card-header">
-                        <p class="card-header-title"> The community still has time to make a decision! </p>
+                        <p class="card-header-title"> The kibbutz still has time to make a decision! </p>
                     </header>
                 </div>
-                <div class="card" th:unless= "${isActive == true or user.username == survey.author or survey.proof != null}">
+                <div class="card" th:unless= "${isActive == true or user.username == survey.poster.username or survey.proof != null}">
                     <header class="card-header">
                         <p class="card-header-title"> Poster must post proof!</p>
                     </header>
@@ -90,8 +90,8 @@
                                 </div>
                             </h4>
                             <p> submitted by
-                                <a th:href="'/profile?author=' + ${survey.author}">
-                                    <span th:text="${survey.author}" />
+                                <a th:href="'/profile?author=' + ${survey.poster.username}">
+                                    <span th:text="${survey.poster.username}" />
                                 </a>   
                             </p>
                             <div class="media">
@@ -111,7 +111,7 @@
                                             <input class="button" type="submit" value="Vote"/>
                                         </form> 
                                     </div>
-                                    <div th:if="${user.username == survey.author or survey.proof == null or voted == false or proofReviewed == true}">
+                                    <div th:if="${user.username == survey.poster.username or survey.proof == null or voted == false or proofReviewed == true}">
                                         <br></br>
                                         <span th:each="choice: ${survey.originalChoices}">
                                             <span th:text="${' ' + choice.name}" />
@@ -132,11 +132,11 @@
                                     <div class="content">
                                         <img th:if="${survey.proof != null}" th:src="${survey.proof.picture.id}" />
                                         <p th:if="${survey.proof != null}" th:text="${survey.proof.comment}"/>
-                                        <div th:unless="${user.username == survey.author or survey.proof == null or voted == false or proofReviewed == true}">
+                                        <div th:unless="${user.username == survey.poster.username or survey.proof == null or voted == false or proofReviewed == true}">
                                             <form action="#" th:action="@{'proof/post_vote/' + ${survey.surveyId}}" th:object="${satisfiedForm}" method="post">
                                                 <input type="radio" th:name="${satisfiedForm.satisfaction}" th:field="${satisfiedForm.satisfaction}" value= "satisfied" th:text="satisfied" />
                                                 <input type="radio" th:name="${satisfiedForm.satisfaction}"  th:field="${satisfiedForm.satisfaction}" value= "unsatisfied" th:text="unsatisfied" />
-                                                <input type="submit" value="Vote"/>
+                                                <input class="button" type="submit" value="Vote"/>
                                             </form> 
                                         </div>                                         
                                     </div>

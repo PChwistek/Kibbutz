@@ -7,7 +7,6 @@ package kibbutz.model.entity;
 
 import kibbutz.model.entity.Survey;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -45,14 +44,21 @@ public class User {
     private int karmaScore;
     
     @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+        cascade = CascadeType.MERGE,
+        orphanRemoval = true
     )
     @JoinColumn(name = "username")
     private List<Survey> surveys = new ArrayList();
     
     /* Not the best efficiency, but oh well 
     */
+    
+    @OneToMany(
+        cascade = CascadeType.MERGE,
+        orphanRemoval = true
+    )
+    @JoinColumn(name="userId")
+    private List<Choice> votedSuggestions = new ArrayList();
     
     @ManyToMany
     @JoinTable(name="followingTable")
@@ -64,7 +70,10 @@ public class User {
     @JoinColumn(name="username")
     private Set<User> followers;
     
-    @OneToMany
+    @OneToMany(     
+        cascade = CascadeType.MERGE,
+        orphanRemoval = true
+    )
     @JoinTable(name="history")
     @JoinColumn(name="userId")
     private Set<Survey> votingHistory;
@@ -251,6 +260,20 @@ public class User {
      */
     public void setSurveysReviewed(Set<Survey> surveysReviewed) {
         this.surveysReviewed = surveysReviewed;
+    }
+
+    /**
+     * @return the votedSuggestions
+     */
+    public List<Choice> getVotedSuggestions() {
+        return votedSuggestions;
+    }
+
+    /**
+     * @param votedSuggestions the votedSuggestions to set
+     */
+    public void setVotedSuggestions(List<Choice> votedSuggestions) {
+        this.votedSuggestions = votedSuggestions;
     }
 
 }
