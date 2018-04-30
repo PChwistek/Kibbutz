@@ -27,7 +27,6 @@ kibbutz/model/entity/Comment.class
 kibbutz/SurveyController.class
 kibbutz/model/form/ChoiceForm.class
 kibbutz/model/form/ProofForm.class
-.netbeans_automatic_build
 kibbutz/UserRepository.class
 kibbutz/model/form/SuggestedChoiceForm.class
 kibbutz/model/form/SurveyForm.class
