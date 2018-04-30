@@ -67,9 +67,9 @@
                                         <form action="#" th:unless="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.poster.username}" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
                                             <div class="control">
                                                 <span th:each="choice: ${survey.originalChoices}">
-                                                    <label class="radio">
+                                                    <label class="radio"  th:classappend="${choice.suggested} ? has-text-weight-bold ">
                                                         <input type="radio" th:name="${choiceForm.choiceOne}" th:field="${choiceForm.choiceOne}" th:value= "${choice.name}" th:text="${' ' + choice.name}" />
-                                                        <span th:text="': ' +  ${choice.votes}" />  
+                                                        <span th:text="': ' +  ${choice.votes}"  th:classappend="${choice.suggested} ? has-text-weight-bold " />  
                                                     </label>
                                                 </span>
                                             </div>
@@ -77,8 +77,8 @@
                                         </form> 
                                         <div th:if="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.poster.username}">
                                              <span th:each="choice: ${survey.originalChoices}">
-                                                <span th:text="${' ' + choice.name}" />
-                                                <span th:text="': ' +  ${choice.votes}" /> 
+                                                <span th:text="${' ' + choice.name}"  th:classappend="${survey.winning != null and survey.winning.id == choice.id} ? has-text-success"  />
+                                                <span th:text="': ' +  ${choice.votes}"  th:classappend="${survey.winning != null and survey.winning.id == choice.id} ? has-text-success" /> 
                                             </span>
                                         </div>
                                     </div>

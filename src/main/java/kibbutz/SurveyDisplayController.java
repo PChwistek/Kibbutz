@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
+import kibbutz.model.entity.Choice;
 import kibbutz.model.entity.Comment;
 import kibbutz.model.entity.ProofPicture;
 import kibbutz.model.entity.Survey;
@@ -65,12 +66,15 @@ public class SurveyDisplayController {
         
         boolean voted = theSurvey.getPoster().getUsername().equalsIgnoreCase(user.getUsername());
         boolean proofReviewed = voted;
-        Survey tempSurvey = null;
         if(!voted){
-            tempSurvey = theUser.getVotingHistory().stream().filter(survey -> survey.getSurveyId().equals(id)).findFirst().orElse(null);
-            voted = tempSurvey != null;
+            voted = theUser.getVotingHistory().stream().anyMatch(survey -> survey.getSurveyId().equals(id));
         }
         
+        List<Long> votedChoiceSurveys = theUser.getVotedSuggestions().stream()
+                .map(choice -> choice.getParentSurvey().getSurveyId())
+                .collect(Collectors.toList());
+        
+        model.addAttribute("votedChoiceSurveys", votedChoiceSurveys);
         model.addAttribute("proofForm", new ProofForm());
         model.addAttribute("satisfiedForm", new SatisfiedForm());
         model.addAttribute("survey", theSurvey);

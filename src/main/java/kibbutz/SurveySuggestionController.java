@@ -42,13 +42,21 @@ public class SurveySuggestionController {
     public ModelAndView rank(@PathVariable("id") Long id, Model model, 
             @SessionAttribute("user") User user){
         
-        User theUser = userRepo.findOne(user.getId());
         Choice sugg = choiceRepo.findOne(id);
-        sugg.incrementRanking();
-        choiceRepo.save(sugg);
-        findMaxSetMain(sugg.getParentSurvey().getChoices());
-        theUser.getVotedSuggestions().add(sugg);
-        userRepo.save(theUser);
+        Survey parentSurvey = sugg.getParentSurvey();
+        
+        
+        if(!user.getVotedSuggestions().stream()
+                .anyMatch(choice -> choice.getParentSurvey().getSurveyId().equals(parentSurvey.getSurveyId()))){
+            
+            User theUser = userRepo.findOne(user.getId());
+            sugg.incrementRanking();
+            choiceRepo.save(sugg);
+            findMaxSetMain(sugg.getParentSurvey().getChoices());
+            theUser.getVotedSuggestions().add(sugg);
+            userRepo.save(theUser);
+        
+        }
         
         return new ModelAndView("redirect:/");
     }

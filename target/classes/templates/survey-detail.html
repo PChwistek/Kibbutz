@@ -102,20 +102,20 @@
                                         <form action="#" th:unless="${voted == true}" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
                                             <div class="control">
                                                 <span th:each="choice: ${survey.originalChoices}">
-                                                    <label class="radio">
+                                                    <label class="radio"  th:classappend="${choice.suggested} ? has-text-weight-bold ">
                                                         <input type="radio" th:name="${choiceForm.choiceOne}" th:field="${choiceForm.choiceOne}" th:value= "${choice.name}" th:text="${' ' + choice.name}" />
-                                                        <span th:text="': ' +  ${choice.votes}" />  
+                                                        <span th:text="': ' +  ${choice.votes}"  th:classappend="${choice.suggested} ? has-text-weight-bold" />  
                                                     </label>
                                                 </span>
                                             </div>
                                             <input class="button" type="submit" value="Vote"/>
                                         </form> 
                                     </div>
-                                    <div th:if="${user.username == survey.poster.username or survey.proof == null or voted == false or proofReviewed == true}">
+                                    <div th:if="${user.username == survey.poster.username or voted == true}">
                                         <br></br>
                                         <span th:each="choice: ${survey.originalChoices}">
-                                            <span th:text="${' ' + choice.name}" />
-                                            <span th:text="': ' +  ${choice.votes}" /> 
+                                            <span th:text="${' ' + choice.name}"  th:classappend="${survey.winning != null and survey.winning.id == choice.id} ? has-text-success"  />
+                                            <span th:text="': ' +  ${choice.votes}"  th:classappend="${survey.winning != null and survey.winning.id == choice.id} ?  has-text-success"  /> 
                                         </span>
                                     </div>
                                 </div>
@@ -204,13 +204,17 @@
     $(document).ready(function () {
 
     $('#file').on("change", function(){ 
-    $('#file-name').text($('#file').val()) 
+        $('#file-name').text($('#file').val()) 
     });
 
     $('#clear-button').click(function(){
-    $('#comment-field').val('');
+        $('#comment-field').val('');
     });
 
+    });
+    
+     $('.clear-button').click(function(){
+        $('.input').val();
     });
     
        function setUpClick(surveyId){

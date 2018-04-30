@@ -55,10 +55,20 @@ public class HomeController {
         User tempUser = (User)model.get("user");
         theUser = userRepo.findUserByUsername(tempUser.getUsername());
         
+        
         System.out.println(theUser.getUsername());
         List<Survey> allActive = surveyRepo.findAllActive();
-        List<Long> allActiveVoted = theUser.getVotingHistory().stream().filter(survey -> survey.isActive()).map(survey -> survey.getSurveyId()).collect(Collectors.toList());
+        List<Long> allActiveVoted = theUser.getVotingHistory().stream().
+                filter(survey -> survey.isActive())
+                .map(survey -> survey.getSurveyId())
+                .collect(Collectors.toList());
+        
+        List<Long> votedChoiceSurveys = theUser.getVotedSuggestions().stream()
+                .map(choice -> choice.getParentSurvey().getSurveyId())
+                .collect(Collectors.toList());
+        
         model.addAttribute("surveys", allActive);
+        model.addAttribute("votedChoiceSurveys", votedChoiceSurveys);
         model.addAttribute("allActiveVoted", allActiveVoted);
         model.addAttribute("suggestionForm", new SuggestedChoiceForm());
         model.addAttribute("user", theUser);

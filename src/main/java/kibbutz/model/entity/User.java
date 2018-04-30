@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import kibbutz.model.form.SignUpForm;
 
 /**
@@ -48,6 +49,7 @@ public class User {
         orphanRemoval = true
     )
     @JoinColumn(name = "username")
+    @OrderBy("creationTime DESC")
     private List<Survey> surveys = new ArrayList();
     
     /* Not the best efficiency, but oh well 

@@ -16,8 +16,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface SurveyRepository extends CrudRepository<Survey, Long> {
     
-        @Query("FROM Survey WHERE active = 1")
+        @Query("FROM Survey WHERE active = 1 ORDER BY creationTime DESC")
         List<Survey> findAllActive();
 
-    
 }

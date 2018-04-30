@@ -21,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import kibbutz.model.form.SurveyForm;
@@ -63,6 +64,7 @@ public class Survey {
 
     )
     @JoinColumn(name = "surveyId")
+    @OrderBy("suggested ASC, ranking DESC")
     private List<Choice> choices = new ArrayList();
 
     @OneToMany(

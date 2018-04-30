@@ -25,12 +25,12 @@
                                 <div class="field is-horizontal">
                                     <div class="field-body">
                                         <div class="field">
-                                            <input class = "input" type="text" th:field="*{title}" placeholder="Title (required)"/>
+                                            <input class = "input" type="text" th:field="*{title}" th:text="*{title}" placeholder="Title (required)"/>
                                         </div>
                                         <div class="field">
                                             <p class="control has-icons-left">
                                                 <span class="select is-fullwidth">
-                                                    <select th:field="*{minutes}">
+                                                    <select th:id='dropdown' th:field="*{minutes}">
                                                         <option th:value="2">2 minutes</option>
                                                         <option th:value="5">5 minutes</option>
                                                         <option th:value="15">15 minutes</option>
@@ -60,7 +60,7 @@
                                         </div>
                                         <div class="field">
                                             <div class="control">
-                                                <input class="input" type="text" th:field="*{choiceTwo}" placeholder="Option 2 (required)" />
+                                                <input class="input" type="text" th:field="*{choiceTwo}"  placeholder="Option 2 (required)" />
                                             </div>
                                         </div>
                                     </div>
@@ -74,7 +74,7 @@
                                         </div>
                                         <div class="field">
                                             <div class="control">
-                                                <input class="input" type="text" th:field="*{choiceFour}" placeholder="Option 4 (not required)" />
+                                                <input class="input" type="text" th:field="*{choiceFour}"  placeholder="Option 4 (not required)" />
                                             </div>
                                         </div>
                                     </div>
@@ -102,7 +102,7 @@
                                 <div class="field ">
                                     <div class="control has-text-centered">
                                         <label class="checkbox no-padding">
-                                            <input type="checkbox" th:field="*{canSuggest}" />
+                                            <input id='checkbox' type="checkbox" th:field="*{canSuggest}" />
                                             Allow the kibbutz to suggest an option.
                                         </label>
                                     </div>
@@ -141,7 +141,18 @@
             
             });
             
+            $("#clear-button").click(function(){
+
+                $(".input").val('');
+                $("#dropdown").val(2);
+                $(".textarea").val('');
+                $("#checkbox").prop("checked", false);
+                $("#file").val('');
+                $("#file-name").text('');
+            });
+            
         });
+        
     </script>
   
 </html>

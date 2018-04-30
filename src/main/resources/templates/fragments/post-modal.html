@@ -14,7 +14,7 @@
                         </div>
                         <br />
                         <div class='control has-text-right'>
-                            <a id='clear-button' class='button'> Clear </a>
+                            <a class='button clear-button'> Clear </a>
                             <input class='button is-primary' type='submit' value='Submit' />
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                                     <div class="media-content">
                                         <div action="#" class="content" method="post">
                                             <form th:id="${'suggestionForm' + choice.id}" th:action="@{'survey/choice/vote_suggestion/' + ${choice.id}}" method="post" >
-                                                <span th:id="${'suggestion' + choice.id}" th:onclick="'upvote(\'' + ${choice.id} + '\');'" class="is-vote has-text-grey-light icon">
+                                                <span th:unless="${#lists.contains(votedChoiceSurveys, survey.surveyId)}" th:id="${'suggestion' + choice.id}" th:onclick="'upvote(\'' + ${choice.id} + '\');'" class="is-vote has-text-grey-light icon">
                                                     <i class="far fa-thumbs-up"></i>
                                                 </span>
                                                 <span th:text="${choice.name + ' posted by: ' + choice.suggester.username + ' votes: ' + choice.ranking}" />
@@ -54,6 +54,10 @@
         }
     }
     
+    $('.clear-button').click(function(){
+        $('.input').val('');
+    });
+
     </script>
 </div>
 

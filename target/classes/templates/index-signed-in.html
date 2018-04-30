@@ -42,9 +42,9 @@
                                             <form action="#" th:unless="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.poster.username}" th:action="@{'vote?id=' + ${survey.surveyId}}" th:object="${choiceForm}" method="post">
                                                 <div class="control">
                                                     <span th:each="choice: ${survey.originalChoices}">
-                                                        <label class="radio">
-                                                            <input type="radio" th:name="${choiceForm.choiceOne}" th:field="${choiceForm.choiceOne}" th:value= "${choice.name}" th:text="${' ' + choice.name}" />
-                                                            <span th:text="': ' +  ${choice.votes}" />  
+                                                        <label class="radio" th:classappend="${choice.suggested} ? has-text-weight-bold " >
+                                                            <input type="radio" th:name="${choiceForm.choiceOne}" th:field="${choiceForm.choiceOne}" th:value= "${choice.name}"  th:text="${' ' + choice.name}" />
+                                                            <span th:text="': ' +  ${choice.votes}" th:classappend="${choice.suggested} ? has-text-weight-bold " />  
                                                         </label>
                                                     </span>
                                                 </div>
@@ -53,8 +53,8 @@
                                             <div th:if="${#lists.contains(allActiveVoted, survey.surveyId) or user.username == survey.poster.username}">
                                                 <br></br>
                                                 <span th:each="choice: ${survey.originalChoices}">
-                                                    <span th:text="${' ' + choice.name}" />
-                                                    <span th:text="': ' +  ${choice.votes}" /> 
+                                                    <span class="" th:text="${' ' + choice.name}" th:classappend="${choice.suggested} ? has-text-weight-bold " />
+                                                    <span class="" th:text="': ' +  ${choice.votes}" th:classappend="${choice.suggested} ? has-text-weight-bold " /> 
                                                 </span>
                                             </div>
                                         </div>

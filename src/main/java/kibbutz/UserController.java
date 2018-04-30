@@ -8,6 +8,7 @@ package kibbutz;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import kibbutz.model.entity.Choice;
 import kibbutz.model.entity.Survey;
 import kibbutz.model.entity.User;
 import kibbutz.model.form.ChoiceForm;
@@ -44,7 +45,8 @@ public class UserController {
     }
     
     @GetMapping("/profile")
-    public String userProfile(@RequestParam("author") String author, ModelMap model, @SessionAttribute("user") User user) {
+    public String userProfile(@RequestParam("author") String author, ModelMap model, 
+            @SessionAttribute("user") User user) {
         
         ArrayList<String> following = new ArrayList();
         ArrayList<String> followers = new ArrayList();
@@ -74,6 +76,13 @@ public class UserController {
                 map(survey -> survey.getSurveyId()).
                 collect(Collectors.toList());
         
+        List<Long> votedChoiceSurveys = theUser.getVotedSuggestions().stream()
+                .map(choice -> choice.getParentSurvey().getSurveyId())
+                .collect(Collectors.toList());
+        
+        
+        model.addAttribute("votedChoiceSurveys", votedChoiceSurveys);
+        model.addAttribute("votedSuggestions", votedChoiceSurveys);
         model.addAttribute("allActiveVoted", allVoted);
         model.addAttribute("history", viewedUser.getVotingHistory());
         model.addAttribute("posted", viewedUser.getSurveys());
