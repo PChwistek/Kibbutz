@@ -55,9 +55,8 @@ public class User {
     /* Not the best efficiency, but oh well 
     */
     
-    @OneToMany(
-        cascade = CascadeType.MERGE,
-        orphanRemoval = true
+    @ManyToMany(
+        cascade = { CascadeType.MERGE, CascadeType.ALL}
     )
     @JoinColumn(name="userId")
     private List<Choice> votedSuggestions = new ArrayList();
@@ -72,15 +71,16 @@ public class User {
     @JoinColumn(name="username")
     private Set<User> followers;
     
-    @OneToMany(     
-        cascade = CascadeType.MERGE,
-        orphanRemoval = true
+    @ManyToMany(     
+        cascade = {CascadeType.MERGE, CascadeType.REFRESH}
     )
     @JoinTable(name="history")
     @JoinColumn(name="userId")
     private Set<Survey> votingHistory;
     
-    @OneToMany
+    @ManyToMany(
+        cascade = {CascadeType.MERGE, CascadeType.REFRESH}
+    )
     @JoinTable(name="reviewed")
     @JoinColumn(name="userId")
     private Set<Survey> surveysReviewed;
