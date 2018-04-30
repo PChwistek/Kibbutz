@@ -11,7 +11,7 @@ Like most sites, Kibbutz can make money through advertisement. Kibbutz could als
 
 ## Project Design
 
-This project will use Spring MVC as the main framework that glues the project together. Hopefully, I will be able to use Bulma on the front-end in order to simplify the CSS for the project. For the backend, I will use JPA for object-relational mapping and Hibernate and MySQL as the persistence provider. Depending on how things work out, I may use React on the front-end to simplify aspects of my UI. 
+This project uses Spring MVC as the main framework that glues the project together. I use Bulma for all front-end stylings. For the backend, I  use JPA for object-relational mapping and Hibernate and MySQL as the persistence provider. 
 
 ### Use Cases
 1.   User posts survey
@@ -21,14 +21,14 @@ This project will use Spring MVC as the main framework that glues the project to
 5.   User determines whether post is public or for friends
 
 ## Schedule
-### Milestone 1
+### Milestone 1 (completed)
 1.	Set up databases and objects (User, Survey, etc.)
 2.	User registration
 3.   User login
 4.	Allow users to post to the site (basic survey and time limit)
 5.	Allow users to vote on others’ posts
 
-### Milestone 2
+### Milestone 2 (completed)
 1.   Allow users to comment on other's posts
 2.   Allow users to follow/friend other users
 3.   Allow OP to post photographic proof 
@@ -36,7 +36,7 @@ This project will use Spring MVC as the main framework that glues the project to
 7. Create/improve current form validations
 
 
-### Milestone 3
+### Milestone 3 (completed)
 1.	Stylize site using CSS and JavaScript
       *	Main page, user page, posts, feed, etc.
 2.	Optimize karma algorithm
@@ -44,7 +44,12 @@ This project will use Spring MVC as the main framework that glues the project to
 4. Allow users to suggest answers
 5. Create more survey templates
 
-Ideally, the final project will have a simple and user-friendly interface that allows people to post decisions while also being able to vote on other people's decisions. After decisions are made, photographic proof is required to receive a healhy dose of internet karma. 
+### Additional Features to Add
+1. Integration with Twitter followers
+2. Search bar functionality
+3. Allow users to see what they voted for
+
+After decisions are made, photographic proof is required to receive a healhy dose of internet karma. 
 
 ## Project Justification
 This project fuses different aspects of existing social media applications such as Reddit, Instagram, and Snapchat. Specifically, it solves the "OP please deliver" issue that many social media platforms suffer. Hopefully, it will be a fun way for users to stave off boredom and discover a new source of entertainment on the internet and among friends. This project is a good demonstration of my skills as it requires knowledge of the full stack. I will be working on both the back-end and front-end of the project, which will display my skills with object-orientation, Java, SQL, CSS, HTML, and JavaScript.
