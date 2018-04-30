@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Kibbutz - User Profile</title>
+            <link rel="icon" th:href="@{/img/favicon.ico}" />
+
+    <div th:replace="fragments/header :: header">... </div>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar">... </div>
+
+    <div th:replace="fragments/account :: account"> ... </div>
+
+    <div th:replace="fragments/footer :: footer">... </div>
+</body>
+<script>
+    function setUpClick(surveyId){
+        $('#postmodal' + surveyId).addClass('is-active');
+    }
+    
+    function closeModal(surveyId){
+        $('#postmodal' + surveyId).removeClass('is-active');
+    }
+    
+</script>
+</html>
+
